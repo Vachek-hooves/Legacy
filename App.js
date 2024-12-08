@@ -5,6 +5,7 @@ import TabNavigation from './Navigation/TabNavigation';
 import {
   StackFIrstDeath,
   StackQuizResults,
+  StackTigerHabitatDetailsScreen,
   StackTimeChallengeScreen,
 } from './screen/stack';
 import {AppContextProvider} from './store/context';
@@ -23,6 +24,10 @@ function App() {
             component={StackTimeChallengeScreen}
           />
           <Stack.Screen name="StackQuizResults" component={StackQuizResults} />
+          <Stack.Screen
+            name="StackTigerHabitatDetails"
+            component={StackTigerHabitatDetailsScreen}
+          />
         </Stack.Navigator>
       </NavigationContainer>
       <Toast />

@@ -31,7 +31,7 @@ export const TigerEncyclopedia = {
       'Generally avoids humans unless threatened',
     ],
     conservationStatus: 'Endangered',
-    image:(require(''))
+    image:(require('../assets/image/bengaltiger.png'))
   },
 
   siberianTiger: {
@@ -64,7 +64,7 @@ export const TigerEncyclopedia = {
       'Can go days without meals due to low prey density',
     ],
     conservationStatus: 'Endangered',
-    image:(require(''))
+    image:(require('../assets/image/bengaltiger.png'))
   },
 
   sumatranTiger: {
@@ -95,7 +95,7 @@ export const TigerEncyclopedia = {
     ],
     conservationStatus: 'Critically Endangered',
     populationStatus: 'Fewer than 400 in wild',
-    image:(require(''))
+    image:(require('../assets/image/bengaltiger.png'))
   },
 
   indochineseTiger: {
@@ -123,7 +123,7 @@ export const TigerEncyclopedia = {
     ],
     conservationStatus: 'Critically Endangered',
     populationStatus: 'Fewer than 350 in wild',
-    image:(require(''))
+    image:(require('../assets/image/bengaltiger.png'))
   },
 
   malayanTiger: {
@@ -152,7 +152,7 @@ export const TigerEncyclopedia = {
     ],
     conservationStatus: 'Critically Endangered',
     populationStatus: 'Fewer than 200 in wild',
-    image:(require(''))
+    image:(require('../assets/image/bengaltiger.png'))
   },
 
   southChinaTiger: {
@@ -176,6 +176,6 @@ export const TigerEncyclopedia = {
     conservationStatus: 'Functionally Extinct in Wild',
     currentStatus: 'Only exists in captivity',
     conservationEfforts: 'Ongoing rewilding programs',
-    image:(require(''))
+    image:(require('../assets/image/bengaltiger.png'))
   },
 };

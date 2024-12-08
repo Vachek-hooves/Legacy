@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import MapView, { Marker, Callout } from 'react-native-maps';
 import { TigerMap } from '../../data/tigerMap';
+import { useNavigation } from '@react-navigation/native';
 
 const TabTigerMapScreen = () => {
+  const navigation = useNavigation();
   const [selectedSubspecies, setSelectedSubspecies] = useState(null);
   
   const initialRegion = {
@@ -23,6 +25,18 @@ const TabTigerMapScreen = () => {
       'South China Tiger': '#FF4444',
     };
     return colors[subspecies] || '#FF8C00';
+  };
+
+  const formatCoordinates = (coords) => {
+    return {
+      latitude: coords.latitude,
+      longitude: coords.longitude
+    };
+  };
+
+  const handleViewDetails = (scientificName) => {
+    console.log('scientificName', scientificName);
+    navigation.navigate('StackTigerHabitatDetails', { scientificName });
   };
 
   return (
@@ -63,15 +77,12 @@ const TabTigerMapScreen = () => {
               return null;
             }
             
-            return tiger.regions.map((region) => {
-              const markers = [];
-              
-              // Add country marker
-              markers.push(
+            return tiger.regions.map((region) => (
+              <React.Fragment key={`${tiger.subspecies}-${region.country}`}>
                 <Marker
-                  key={`${tiger.subspecies}-${region.country}`}
-                  coordinate={region.coordinates}
+                  coordinate={formatCoordinates(region.coordinates)}
                   pinColor={getMarkerColor(tiger.subspecies)}
+                  onCalloutPress={() => handleViewDetails(tiger.scientificName)}
                 >
                   <Callout>
                     <View style={styles.callout}>
@@ -80,35 +91,43 @@ const TabTigerMapScreen = () => {
                       <Text style={styles.calloutText}>
                         {tiger.scientificName}
                       </Text>
+                      {region.status && (
+                        <Text style={[styles.calloutText, styles.statusText]}>
+                          Status: {region.status}
+                        </Text>
+                      )}
+                      <View style={styles.detailsButton}>
+                        <Text style={styles.detailsButtonText}>View Details</Text>
+                      </View>
                     </View>
                   </Callout>
                 </Marker>
-              );
-
-              // Add major sites markers
-              if (region.majorSites) {
-                region.majorSites.forEach((site) => {
-                  markers.push(
-                    <Marker
-                      key={`${tiger.subspecies}-${site.name}`}
-                      coordinate={site.coordinates}
-                      pinColor={getMarkerColor(tiger.subspecies)}
-                    >
-                      <Callout>
-                        <View style={styles.callout}>
-                          <Text style={styles.calloutTitle}>{site.name}</Text>
-                          <Text style={styles.calloutSubtitle}>
-                            {tiger.subspecies} habitat
-                          </Text>
+                {/* Major sites markers */}
+                {region.majorSites?.map((site) => (
+                  <Marker
+                    key={`${tiger.subspecies}-${site.name}`}
+                    coordinate={formatCoordinates(site.coordinates)}
+                    pinColor={getMarkerColor(tiger.subspecies)}
+                    onCalloutPress={() => handleViewDetails(tiger.scientificName)}
+                  >
+                    <Callout>
+                      <View style={styles.callout}>
+                        <Text style={styles.calloutTitle}>{site.name}</Text>
+                        <Text style={styles.calloutSubtitle}>
+                          {tiger.subspecies} habitat
+                        </Text>
+                        <Text style={styles.calloutText}>
+                          {region.country}
+                        </Text>
+                        <View style={styles.detailsButton}>
+                          <Text style={styles.detailsButtonText}>View Details</Text>
                         </View>
-                      </Callout>
-                    </Marker>
-                  );
-                });
-              }
-
-              return markers;
-            });
+                      </View>
+                    </Callout>
+                  </Marker>
+                ))}
+              </React.Fragment>
+            ));
           })}
         </MapView>
       </View>
@@ -183,4 +202,21 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#888',
   },
+  detailsButton: {
+    backgroundColor: '#FF8C00',
+    padding: 8,
+    borderRadius: 10,
+    marginTop: 10,
+  },
+  detailsButtonText: {
+    color: 'white',
+    textAlign: 'center',
+    fontWeight: 'bold',
+    fontSize: 12,
+  },
+  statusText: {
+    color: '#FF4444',
+    fontWeight: 'bold',
+    marginTop: 3,
+  }
 });
