@@ -51,20 +51,27 @@ const StackTimeChallengeScreen = ({navigation}) => {
 
   const getNextQuestion = () => {
     const question = getRandomQuestion(usedQuestionIds);
-    setCurrentQuestion(question);
-    setUsedQuestionIds([...usedQuestionIds, question.id]);
+    
+    // If we run out of questions, reset the used questions array
+    if (!question) {
+        setUsedQuestionIds([]);
+        setCurrentQuestion(getRandomQuestion([]));
+    } else {
+        setCurrentQuestion(question);
+        setUsedQuestionIds([...usedQuestionIds, question.id]);
+    }
     
     Animated.sequence([
-      Animated.timing(fadeAnim, {
-        toValue: 0,
-        duration: 200,
-        useNativeDriver: true,
-      }),
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 200,
-        useNativeDriver: true,
-      }),
+        Animated.timing(fadeAnim, {
+            toValue: 0,
+            duration: 200,
+            useNativeDriver: true,
+        }),
+        Animated.timing(fadeAnim, {
+            toValue: 1,
+            duration: 200,
+            useNativeDriver: true,
+        }),
     ]).start();
   };
 

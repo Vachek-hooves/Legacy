@@ -9,7 +9,10 @@ export const AppContextProvider = ({children}) => {
     timeChallenge: 0,
     survival: 0,
   });
-  const [currentQuiz, setCurrentQuiz] = useState(null);
+  const [gamesPlayed, setGamesPlayed] = useState({
+    timeChallenge: 0,
+    survival: 0,
+  });
   const [quizHistory, setQuizHistory] = useState([]);
 
   // Load saved data on app start
@@ -21,9 +24,11 @@ export const AppContextProvider = ({children}) => {
     try {
       const savedHighScores = await AsyncStorage.getItem('highScores');
       const savedHistory = await AsyncStorage.getItem('quizHistory');
+      const savedGamesPlayed = await AsyncStorage.getItem('gamesPlayed');
       
       if (savedHighScores) setHighScores(JSON.parse(savedHighScores));
       if (savedHistory) setQuizHistory(JSON.parse(savedHistory));
+      if (savedGamesPlayed) setGamesPlayed(JSON.parse(savedGamesPlayed));
     } catch (error) {
       console.error('Error loading saved data:', error);
     }
@@ -50,6 +55,19 @@ export const AppContextProvider = ({children}) => {
     }
   };
 
+  const incrementGamesPlayed = async (mode) => {
+    try {
+      const newGamesPlayed = {
+        ...gamesPlayed,
+        [mode]: gamesPlayed[mode] + 1
+      };
+      setGamesPlayed(newGamesPlayed);
+      await AsyncStorage.setItem('gamesPlayed', JSON.stringify(newGamesPlayed));
+    } catch (error) {
+      console.error('Error updating games played:', error);
+    }
+  };
+
   const saveQuizResult = async (mode, score, duration) => {
     try {
       const newResult = {
@@ -58,9 +76,10 @@ export const AppContextProvider = ({children}) => {
         duration,
         date: new Date().toISOString(),
       };
-      const updatedHistory = [newResult, ...quizHistory].slice(0, 10); // Keep last 10 results
+      const updatedHistory = [newResult, ...quizHistory].slice(0, 10);
       setQuizHistory(updatedHistory);
       await AsyncStorage.setItem('quizHistory', JSON.stringify(updatedHistory));
+      await incrementGamesPlayed(mode);
     } catch (error) {
       console.error('Error saving quiz result:', error);
     }
@@ -69,11 +88,10 @@ export const AppContextProvider = ({children}) => {
   const value = {
     highScores,
     quizHistory,
+    gamesPlayed,
     getRandomQuestion,
     updateHighScore,
     saveQuizResult,
-    currentQuiz,
-    setCurrentQuiz,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -11,7 +11,7 @@ import { useAppContext } from '../../store/context';
 
 const StackQuizResults = ({ route, navigation }) => {
   const { mode, score, message } = route.params;
-  const { highScores } = useAppContext();
+  const { highScores, gamesPlayed } = useAppContext();
 
   const isNewHighScore = score >= highScores[mode];
 
@@ -40,9 +40,18 @@ const StackQuizResults = ({ route, navigation }) => {
             </Text>
           </View>
           <View style={styles.statItem}>
-            <Text style={styles.statLabel}>Previous Best</Text>
-            <Text style={styles.statValue}>{highScores[mode]}</Text>
+            <Text style={styles.statLabel}>Games Played</Text>
+            <Text style={styles.statValue}>{gamesPlayed[mode]}</Text>
           </View>
+        </View>
+
+        <View style={styles.additionalStats}>
+          <Text style={styles.additionalStatsText}>
+            Total Games: {gamesPlayed.survival + gamesPlayed.timeChallenge}
+          </Text>
+          <Text style={styles.additionalStatsText}>
+            Average Score: {(highScores[mode] / (gamesPlayed[mode] || 1)).toFixed(1)}
+          </Text>
         </View>
 
         <View style={styles.buttonContainer}>
@@ -157,5 +166,16 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
+  },
+  additionalStats: {
+    width: '100%',
+    paddingHorizontal: 20,
+    marginBottom: 30,
+  },
+  additionalStatsText: {
+    fontSize: 16,
+    color: '#FFA500',
+    textAlign: 'center',
+    marginBottom: 5,
   },
 });
