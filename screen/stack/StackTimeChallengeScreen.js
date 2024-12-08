@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Animated,
+  ScrollView,
 } from 'react-native';
 import {useAppContext} from '../../store/context';
 
@@ -86,10 +87,13 @@ const StackTimeChallengeScreen = ({navigation}) => {
 
   return (
     <SafeAreaView style={styles.container}>
+
+      
       <View style={styles.header}>
         <Text style={styles.timer}>Time: {timeLeft}s</Text>
         <Text style={styles.score}>Score: {score}</Text>
       </View>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
 
       <Animated.View style={[styles.questionContainer, {opacity: fadeAnim}]}>
         <Text style={styles.question}>{currentQuestion.question}</Text>
@@ -106,6 +110,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
           ))}
         </View>
       </Animated.View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -113,6 +118,9 @@ const StackTimeChallengeScreen = ({navigation}) => {
 export default StackTimeChallengeScreen;
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#1A1A1A',

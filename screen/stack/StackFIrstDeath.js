@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   SafeAreaView,
   Animated,
+  ScrollView,
 } from 'react-native';
 import {useAppContext} from '../../store/context';
 
@@ -64,21 +65,24 @@ const StackFirstDeath = ({navigation}) => {
         <Text style={styles.score}>Score: {score}</Text>
       </View>
 
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+
       <Animated.View style={[styles.questionContainer, {opacity: fadeAnim}]}>
         <Text style={styles.question}>{currentQuestion.question}</Text>
 
         <View style={styles.optionsContainer}>
           {currentQuestion.options.map((option, index) => (
             <TouchableOpacity
-              key={index}
-              style={styles.optionButton}
-              onPress={() => handleAnswer(option)}
+            key={index}
+            style={styles.optionButton}
+            onPress={() => handleAnswer(option)}
             >
               <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>
           ))}
         </View>
       </Animated.View>
+          </ScrollView>
     </SafeAreaView>
   );
 };
@@ -86,6 +90,9 @@ const StackFirstDeath = ({navigation}) => {
 export default StackFirstDeath;
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   container: {
     flex: 1,
     backgroundColor: '#1A1A1A',

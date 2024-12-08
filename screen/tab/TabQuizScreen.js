@@ -1,12 +1,33 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, ImageBackground, SafeAreaView} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView} from 'react-native';
+import { useAppContext } from '../../store/context';
 
 const TabQuizScreen = ({navigation}) => {
+  const { highScores, gamesPlayed } = useAppContext();
+
   return (
     <SafeAreaView style={styles.container}>
+      <ScrollView>
+
+      
       <View style={styles.content}>
         <Text style={styles.mainTitle}>Tiger Quiz Challenge</Text>
         <Text style={styles.subtitle}>Test your knowledge about tigers</Text>
+
+        <View style={styles.statsContainer}>
+          <View style={styles.statItem}>
+            <Text style={styles.statLabel}>Total Games</Text>
+            <Text style={styles.statValue}>
+              {gamesPlayed.survival + gamesPlayed.timeChallenge}
+            </Text>
+          </View>
+          <View style={styles.statItem}>
+            <Text style={styles.statLabel}>Best Score</Text>
+            <Text style={styles.statValue}>
+              {Math.max(highScores.survival, highScores.timeChallenge)}
+            </Text>
+          </View>
+        </View>
 
         <TouchableOpacity 
           style={styles.challengeCard}
@@ -14,10 +35,14 @@ const TabQuizScreen = ({navigation}) => {
         >
           <View style={[styles.cardOverlay, styles.timeOverlay]}>
             <Text style={styles.cardTitle}>Time Challenge</Text>
-            <Text style={styles.timerText}>30</Text>
+            <Text style={styles.timerText}>90s</Text>
             <Text style={styles.cardDescription}>
-              Race against time! Answer as many questions as you can in 30 seconds
+              Race against time! Answer as many questions as you can in 90 seconds
             </Text>
+            <View style={styles.cardStats}>
+              <Text style={styles.cardStatText}>High Score: {highScores.timeChallenge}</Text>
+              <Text style={styles.cardStatText}>Games: {gamesPlayed.timeChallenge}</Text>
+            </View>
           </View>
         </TouchableOpacity>
 
@@ -31,9 +56,14 @@ const TabQuizScreen = ({navigation}) => {
             <Text style={styles.cardDescription}>
               One life, one chance! How far can you go without making a mistake?
             </Text>
+            <View style={styles.cardStats}>
+              <Text style={styles.cardStatText}>High Score: {highScores.survival}</Text>
+              <Text style={styles.cardStatText}>Games: {gamesPlayed.survival}</Text>
+            </View>
           </View>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -64,11 +94,35 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#FFA500',
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 20,
     opacity: 0.8
   },
+  statsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 30,
+  },
+  statItem: {
+    alignItems: 'center',
+    backgroundColor: 'rgba(255, 140, 0, 0.1)',
+    padding: 15,
+    borderRadius: 15,
+    minWidth: 140,
+    borderWidth: 1,
+    borderColor: '#FF8C00',
+  },
+  statLabel: {
+    fontSize: 14,
+    color: '#FFA500',
+    marginBottom: 5,
+  },
+  statValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#FF8C00',
+  },
   challengeCard: {
-    height: 200,
+    height: 220,
     marginBottom: 20,
     borderRadius: 20,
     overflow: 'hidden',
@@ -90,7 +144,6 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
   },
   timeOverlay: {
     backgroundColor: 'rgba(255, 107, 107, 0.85)',
@@ -121,5 +174,20 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     opacity: 0.9,
     paddingHorizontal: 20,
+    marginBottom: 15,
+  },
+  cardStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 10,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    padding: 10,
+    borderRadius: 10,
+  },
+  cardStatText: {
+    color: 'white',
+    fontSize: 12,
+    opacity: 0.9,
   }
 });
