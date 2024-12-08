@@ -5,39 +5,39 @@ export const TigerMap = [
     regions: [
       {
         country: 'India',
-        coordinates: {lat: 20.5937, lng: 78.9629},
+        coordinates: {latitude: 20.5937, longitude: 78.9629},
         majorSites: [
           {
             name: 'Ranthambore National Park',
-            coordinates: {lat: 26.0173, lng: 76.5026},
+            coordinates: {latitude: 26.0173, longitude: 76.5026},
           },
           {
             name: 'Kanha National Park',
-            coordinates: {lat: 22.3345, lng: 80.6115},
+            coordinates: {latitude: 22.3345, longitude: 80.6115},
           },
           {
             name: 'Kaziranga National Park',
-            coordinates: {lat: 26.5937, lng: 93.17},
+            coordinates: {latitude: 26.5937, longitude: 93.17},
           },
         ],
       },
       {
         country: 'Bangladesh',
-        coordinates: {lat: 23.685, lng: 90.3563},
+        coordinates: {latitude: 23.685, longitude: 90.3563},
         majorSites: [
           {
             name: 'Sundarbans',
-            coordinates: {lat: 21.9497, lng: 89.1833},
+            coordinates: {latitude: 21.9497, longitude: 89.1833},
           },
         ],
       },
       {
         country: 'Nepal',
-        coordinates: {lat: 28.3949, lng: 84.124},
+        coordinates: {latitude: 28.3949, longitude: 84.124},
       },
       {
         country: 'Bhutan',
-        coordinates: {lat: 27.5142, lng: 90.4336},
+        coordinates: {latitude: 27.5142, longitude: 90.4336},
       },
     ],
   },
@@ -47,30 +47,30 @@ export const TigerMap = [
     regions: [
       {
         country: 'Russia',
-        coordinates: {lat: 61.524, lng: 105.3188},
+        coordinates: {latitude: 61.524, longitude: 105.3188},
         majorSites: [
           {
             name: 'Primorsky Krai',
-            coordinates: {lat: 45.0, lng: 135.0},
+            coordinates: {latitude: 45.0, longitude: 135.0},
           },
           {
             name: 'Khabarovsk Krai',
-            coordinates: {lat: 48.4827, lng: 135.0836},
+            coordinates: {latitude: 48.4827, longitude: 135.0836},
           },
           {
             name: 'Land of the Leopard National Park',
-            coordinates: {lat: 42.58, lng: 130.72},
+            coordinates: {latitude: 42.58, longitude: 130.72},
           },
           {
             name: 'Ussuri Taiga',
-            coordinates: {lat: 45.0, lng: 135.0},
+            coordinates: {latitude: 45.0, longitude: 135.0},
           },
         ],
       },
       {
         country: 'China',
         region: 'Northeast',
-        coordinates: {lat: 45.75, lng: 126.65},
+        coordinates: {latitude: 45.75, longitude: 126.65},
       },
     ],
   },
@@ -81,19 +81,19 @@ export const TigerMap = [
       {
         country: 'Indonesia',
         island: 'Sumatra',
-        coordinates: {lat: -0.5897, lng: 101.3431},
+        coordinates: {latitude: -0.5897, longitude: 101.3431},
         majorSites: [
           {
             name: 'Gunung Leuser National Park',
-            coordinates: {lat: 3.8167, lng: 97.35},
+            coordinates: {latitude: 3.8167, longitude: 97.35},
           },
           {
             name: 'Bukit Barisan Selatan National Park',
-            coordinates: {lat: -5.3167, lng: 104.0333},
+            coordinates: {latitude: -5.3167, longitude: 104.0333},
           },
           {
             name: 'Kerinci Seblat National Park',
-            coordinates: {lat: -2.45, lng: 101.45},
+            coordinates: {latitude: -2.45, longitude: 101.45},
           },
         ],
       },
@@ -105,23 +105,23 @@ export const TigerMap = [
     regions: [
       {
         country: 'Cambodia',
-        coordinates: {lat: 12.5657, lng: 104.991},
+        coordinates: {latitude: 12.5657, longitude: 104.991},
       },
       {
         country: 'Laos',
-        coordinates: {lat: 19.8563, lng: 102.4955},
+        coordinates: {latitude: 19.8563, longitude: 102.4955},
       },
       {
         country: 'Myanmar',
-        coordinates: {lat: 21.9162, lng: 95.956},
+        coordinates: {latitude: 21.9162, longitude: 95.956},
       },
       {
         country: 'Thailand',
-        coordinates: {lat: 15.87, lng: 100.9925},
+        coordinates: {latitude: 15.87, longitude: 100.9925},
       },
       {
         country: 'Vietnam',
-        coordinates: {lat: 14.0583, lng: 108.2772},
+        coordinates: {latitude: 14.0583, longitude: 108.2772},
       },
     ],
   },
@@ -131,22 +131,22 @@ export const TigerMap = [
     regions: [
       {
         country: 'Malaysia',
-        coordinates: {lat: 4.2105, lng: 101.9758},
+        coordinates: {latitude: 4.2105, longitude: 101.9758},
         majorSites: [
           {
             name: 'Taman Negara National Park',
-            coordinates: {lat: 4.5, lng: 102.45},
+            coordinates: {latitude: 4.5, longitude: 102.45},
           },
           {
             name: 'Belum State Park',
-            coordinates: {lat: 5.5, lng: 101.6667},
+            coordinates: {latitude: 5.5, longitude: 101.6667},
           },
         ],
       },
       {
         country: 'Thailand',
         region: 'Southern',
-        coordinates: {lat: 7.8804, lng: 99.8},
+        coordinates: {latitude: 7.8804, longitude: 99.8},
       },
     ],
   },
@@ -156,23 +156,24 @@ export const TigerMap = [
     regions: [
       {
         country: 'China',
-        coordinates: {lat: 35.8617, lng: 104.1954},
+        coordinates: {latitude: 35.8617, longitude: 104.1954},
         historicalProvinces: [
           {
             name: 'Guangdong',
-            coordinates: {lat: 23.379, lng: 113.7633},
+            coordinates: {latitude: 23.379, longitude: 113.7633},
           },
           {
             name: 'Hunan',
-            coordinates: {lat: 27.6104, lng: 111.7088},
+            coordinates: {latitude: 27.6104, longitude: 111.7088},
           },
           {
             name: 'Fujian',
-            coordinates: {lat: 26.0789, lng: 117.9874},
+            coordinates: {latitude: 26.0789, longitude  : 117.9874},
           },
         ],
         status: 'Functionally extinct in wild',
       },
     ],
   },
+ 
 ];
