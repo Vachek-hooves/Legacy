@@ -1,5 +1,10 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {TabMainScreen, TabQuizScreen, TabTigerMapScreen} from '../screen/tab';
+import {
+  TabArticleScreen,
+  TabMainScreen,
+  TabQuizScreen,
+  TabTigerMapScreen,
+} from '../screen/tab';
 
 const Tab = createBottomTabNavigator();
 
@@ -9,6 +14,7 @@ const TabNavigation = () => {
       <Tab.Screen name="TabQuizScreen" component={TabQuizScreen} />
       <Tab.Screen name="TabMainScreen" component={TabMainScreen} />
       <Tab.Screen name="TabTigerMapScreen" component={TabTigerMapScreen} />
+      <Tab.Screen name="TabArticleScreen" component={TabArticleScreen} />
     </Tab.Navigator>
   );
 };
