@@ -43,29 +43,32 @@ const TabTigerMapScreen = () => {
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Tiger Habitats</Text>
       
-      <ScrollView horizontal style={styles.subspeciesScroll}>
+      <View style={styles.subspeciesContainer}> 
+
+      <ScrollView horizontal style={styles.subspeciesScroll}  showsHorizontalScrollIndicator={false}>
         <TouchableOpacity 
           style={[
             styles.filterButton,
             !selectedSubspecies && styles.filterButtonActive
           ]}
           onPress={() => setSelectedSubspecies(null)}
-        >
+          >
           <Text style={styles.filterText}>All Tigers</Text>
         </TouchableOpacity>
         {TigerMap.map((tiger) => (
           <TouchableOpacity
-            key={tiger.subspecies}
-            style={[
-              styles.filterButton,
-              selectedSubspecies === tiger.subspecies && styles.filterButtonActive
-            ]}
-            onPress={() => setSelectedSubspecies(tiger.subspecies)}
+          key={tiger.subspecies}
+          style={[
+            styles.filterButton,
+            selectedSubspecies === tiger.subspecies && styles.filterButtonActive
+          ]}
+          onPress={() => setSelectedSubspecies(tiger.subspecies)}
           >
             <Text style={styles.filterText}>{tiger.subspecies}</Text>
           </TouchableOpacity>
         ))}
-      </ScrollView>
+        </ScrollView>
+      </View>
 
       <View style={styles.mapContainer}>
         <MapView
@@ -138,6 +141,9 @@ const TabTigerMapScreen = () => {
 export default TabTigerMapScreen;
 
 const styles = StyleSheet.create({
+  subspeciesContainer: {
+    marginHorizontal: 10,
+  },
   container: {
     flex: 1,
     backgroundColor: '#1A1A1A',
