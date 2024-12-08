@@ -159,10 +159,10 @@ export const TigerEncyclopedia = {
     scientificName: 'Panthera tigris amoyensis',
     commonName: 'South China Tiger',
     habitat: {
-      historical: {
+      // historical: {
         regions: ['Central China', 'Southern China'],
         terrainTypes: ['Mountainous regions', 'Forested regions'],
-      },
+      // },
     },
     physicalCharacteristics: {
       appearance: 'Bright orange coat with distinct black stripes',

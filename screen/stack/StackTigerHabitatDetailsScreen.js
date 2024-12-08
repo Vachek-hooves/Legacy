@@ -50,8 +50,8 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
         <View style={styles.infoSection}>
           <Text style={styles.sectionTitle}>Habitat</Text>
           <View style={styles.habitatInfo}>
-            <Text style={styles.infoText}>Regions: {tigerData.habitat.regions?.join(', ')}</Text>
-            <Text style={styles.infoText}>Terrain: {tigerData.habitat.terrainTypes?.join(', ')}</Text>
+            <Text style={styles.infoText}>Regions: {tigerData.habitat.regions.join(', ')}</Text>
+            <Text style={styles.infoText}>Terrain: {tigerData.habitat.terrainTypes.join(', ')}</Text>
             {tigerData.habitat.famousLocation && (
               <Text style={styles.infoText}>Famous Location: {tigerData.habitat.famousLocation}</Text>
             )}

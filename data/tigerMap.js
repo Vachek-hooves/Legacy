@@ -157,23 +157,22 @@ export const TigerMap = [
       {
         country: 'China',
         coordinates: {latitude: 35.8617, longitude: 104.1954},
-        historicalProvinces: [
+        status: 'Functionally extinct in wild',
+        majorSites: [
           {
-            name: 'Guangdong',
+            name: 'Guangdong Province',
             coordinates: {latitude: 23.379, longitude: 113.7633},
           },
           {
-            name: 'Hunan',
+            name: 'Hunan Province',
             coordinates: {latitude: 27.6104, longitude: 111.7088},
           },
           {
-            name: 'Fujian',
-            coordinates: {latitude: 26.0789, longitude  : 117.9874},
+            name: 'Fujian Province',
+            coordinates: {latitude: 26.0789, longitude: 117.9874},
           },
         ],
-        status: 'Functionally extinct in wild',
       },
     ],
   },
- 
 ];
