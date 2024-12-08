@@ -2,7 +2,11 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Toast from 'react-native-toast-message';
 import TabNavigation from './Navigation/TabNavigation';
-import {StackFIrstDeath, StackTimeChallengeScreen} from './screen/stack';
+import {
+  StackFIrstDeath,
+  StackQuizResults,
+  StackTimeChallengeScreen,
+} from './screen/stack';
 import {AppContextProvider} from './store/context';
 
 const Stack = createNativeStackNavigator();
@@ -18,6 +22,7 @@ function App() {
             name="StackTimeChallengeScreen"
             component={StackTimeChallengeScreen}
           />
+          <Stack.Screen name="StackQuizResults" component={StackQuizResults} />
         </Stack.Navigator>
       </NavigationContainer>
       <Toast />
