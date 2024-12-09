@@ -29,7 +29,7 @@ const TabNavigation = () => {
           tabBarLabel: 'Quiz',
           tabBarIcon: ({color, size}) => (
             <View style={styles.iconContainer}>
-              <Icon name="game-controller" size={size} color={color} />
+              <Icon name="game-controller" size={32} color={color} />
             </View>
           ),
         }}
@@ -38,10 +38,10 @@ const TabNavigation = () => {
         name="TabMainScreen"
         component={TabMainScreen}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: 'Profile',
           tabBarIcon: ({color, size}) => (
             <View style={styles.iconContainer}>
-              <Icon name="home" size={size} color={color} />
+              <Icon name="person" size={32} color={color} />
             </View>
           ),
         }}
@@ -53,12 +53,12 @@ const TabNavigation = () => {
           tabBarLabel: 'Map',
           tabBarIcon: ({color, size}) => (
             <View style={styles.iconContainer}>
-              <Icon name="map" size={size} color={color} />
+              <Icon name="map" size={32} color={color} />
             </View>
           ),
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="TabArticleScreen"
         component={TabArticleScreen}
         options={{
@@ -69,7 +69,7 @@ const TabNavigation = () => {
             </View>
           ),
         }}
-      />
+      /> */}
     </Tab.Navigator>
   );
 };
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     backgroundColor: '#1A1A1A',
     borderRadius: 15,
-    height: 70,
+    height: 80,
     shadowColor: '#FF4444',
     shadowOffset: {
       width: 0,
@@ -112,14 +112,15 @@ const styles = StyleSheet.create({
     marginHorizontal:10
   },
   iconContainer: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
   },
   tabLabel: {
     fontSize: 12,
     fontWeight: '600',
+    marginTop: 5,
   },
 });
 
