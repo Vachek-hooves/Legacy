@@ -18,7 +18,12 @@ function App() {
   return (
     <AppContextProvider>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            animation: 'fade',
+            animationDuration: 1000,
+          }}>
           <Stack.Screen
             name="StackWelcomeScreen"
             component={StackWelcomeScreen}

@@ -18,22 +18,12 @@ const TabNavigation = () => {
         headerShown: false,
         tabBarShowLabel: true,
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: '#FF4444',
+        tabBarActiveTintColor: '#FF8C00',
         tabBarInactiveTintColor: '#FFFFFF',
         tabBarLabelStyle: styles.tabLabel,
+        animation:'fade',
+        
       }}>
-      <Tab.Screen
-        name="TabQuizScreen"
-        component={TabQuizScreen}
-        options={{
-          tabBarLabel: 'Quiz',
-          tabBarIcon: ({color, size}) => (
-            <View style={styles.iconContainer}>
-              <Icon name="game-controller" size={32} color={color} />
-            </View>
-          ),
-        }}
-      />
       <Tab.Screen
         name="TabMainScreen"
         component={TabMainScreen}
@@ -46,6 +36,19 @@ const TabNavigation = () => {
           ),
         }}
       />
+      <Tab.Screen
+        name="TabQuizScreen"
+        component={TabQuizScreen}
+        options={{
+          tabBarLabel: 'Quiz',
+          tabBarIcon: ({color, size}) => (
+            <View style={styles.iconContainer}>
+              <Icon name="game-controller" size={32} color={color} />
+            </View>
+          ),
+        }}
+      />
+
       <Tab.Screen
         name="TabTigerMapScreen"
         component={TabTigerMapScreen}
@@ -84,7 +87,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A1A1A',
     borderRadius: 15,
     height: 80,
-    shadowColor: '#FF4444',
+    // shadowColor: '#FF4444',
+    shadowColor: '#FF8C00',
     shadowOffset: {
       width: 0,
       height: 4,
@@ -94,13 +98,14 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingTop: 5,
     borderWidth: 1,
-    borderColor: '#FF4444',
+    // borderColor: '#FF4444',
+    borderColor:'#FF8C00',
     ...Platform.select({
       android: {
         elevation: 5,
       },
       ios: {
-        shadowColor: '#FF4444',
+        shadowColor: '#FF8C00',
         shadowOffset: {
           width: 0,
           height: 4,
@@ -109,7 +114,7 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
       },
     }),
-    marginHorizontal:10
+    marginHorizontal: 10,
   },
   iconContainer: {
     width: 50,

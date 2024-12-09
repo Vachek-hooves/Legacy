@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
-import MapView, { Marker, Callout } from 'react-native-maps';
-import { TigerMap } from '../../data/tigerMap';
-import { useNavigation } from '@react-navigation/native';
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import MapView, {Marker, Callout} from 'react-native-maps';
+import {TigerMap} from '../../data/tigerMap';
+import {useNavigation} from '@react-navigation/native';
+import TabLayout from '../../components/layout/TabLayout';
 
 const TabTigerMapScreen = () => {
   const navigation = useNavigation();
   const [selectedSubspecies, setSelectedSubspecies] = useState(null);
-  
+
   const initialRegion = {
     latitude: 23.5937,
     longitude: 102.9629,
@@ -15,7 +23,7 @@ const TabTigerMapScreen = () => {
     longitudeDelta: 50,
   };
 
-  const getMarkerColor = (subspecies) => {
+  const getMarkerColor = subspecies => {
     const colors = {
       'Bengal Tiger': '#FF8C00',
       'Siberian Tiger': '#4A90E2',
@@ -27,114 +35,127 @@ const TabTigerMapScreen = () => {
     return colors[subspecies] || '#FF8C00';
   };
 
-  const formatCoordinates = (coords) => {
+  const formatCoordinates = coords => {
     return {
       latitude: coords.latitude,
-      longitude: coords.longitude
+      longitude: coords.longitude,
     };
   };
 
-  const handleViewDetails = (scientificName) => {
+  const handleViewDetails = scientificName => {
     console.log('scientificName', scientificName);
-    navigation.navigate('StackTigerHabitatDetails', { scientificName });
+    navigation.navigate('StackTigerHabitatDetails', {scientificName});
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Tiger Habitats</Text>
-      
-      <View style={styles.subspeciesContainer}> 
+    <TabLayout blur={15}>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.title}>Tiger Habitats</Text>
 
-      <ScrollView horizontal style={styles.subspeciesScroll}  showsHorizontalScrollIndicator={false}>
-        <TouchableOpacity 
-          style={[
-            styles.filterButton,
-            !selectedSubspecies && styles.filterButtonActive
-          ]}
-          onPress={() => setSelectedSubspecies(null)}
-          >
-          <Text style={styles.filterText}>All Tigers</Text>
-        </TouchableOpacity>
-        {TigerMap.map((tiger) => (
-          <TouchableOpacity
-          key={tiger.subspecies}
-          style={[
-            styles.filterButton,
-            selectedSubspecies === tiger.subspecies && styles.filterButtonActive
-          ]}
-          onPress={() => setSelectedSubspecies(tiger.subspecies)}
-          >
-            <Text style={styles.filterText}>{tiger.subspecies}</Text>
-          </TouchableOpacity>
-        ))}
-        </ScrollView>
-      </View>
+        <View style={styles.subspeciesContainer}>
+          <ScrollView
+            horizontal
+            style={styles.subspeciesScroll}
+            showsHorizontalScrollIndicator={false}>
+            <TouchableOpacity
+              style={[
+                styles.filterButton,
+                !selectedSubspecies && styles.filterButtonActive,
+              ]}
+              onPress={() => setSelectedSubspecies(null)}>
+              <Text style={styles.filterText}>All Tigers</Text>
+            </TouchableOpacity>
+            {TigerMap.map(tiger => (
+              <TouchableOpacity
+                key={tiger.subspecies}
+                style={[
+                  styles.filterButton,
+                  selectedSubspecies === tiger.subspecies &&
+                    styles.filterButtonActive,
+                ]}
+                onPress={() => setSelectedSubspecies(tiger.subspecies)}>
+                <Text style={styles.filterText}>{tiger.subspecies}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
 
-      <View style={styles.mapContainer}>
-        <MapView
-          style={styles.map}
-          initialRegion={initialRegion}
-        >
-          {TigerMap.map((tiger) => {
-            if (selectedSubspecies && selectedSubspecies !== tiger.subspecies) {
-              return null;
-            }
-            
-            return tiger.regions.map((region) => (
-              <React.Fragment key={`${tiger.subspecies}-${region.country}`}>
-                <Marker
-                  coordinate={formatCoordinates(region.coordinates)}
-                  pinColor={getMarkerColor(tiger.subspecies)}
-                  onCalloutPress={() => handleViewDetails(tiger.scientificName)}
-                >
-                  <Callout>
-                    <View style={styles.callout}>
-                      <Text style={styles.calloutTitle}>{tiger.subspecies}</Text>
-                      <Text style={styles.calloutSubtitle}>{region.country}</Text>
-                      <Text style={styles.calloutText}>
-                        {tiger.scientificName}
-                      </Text>
-                      {region.status && (
-                        <Text style={[styles.calloutText, styles.statusText]}>
-                          Status: {region.status}
-                        </Text>
-                      )}
-                      <View style={styles.detailsButton}>
-                        <Text style={styles.detailsButtonText}>View Details</Text>
-                      </View>
-                    </View>
-                  </Callout>
-                </Marker>
-                {/* Major sites markers */}
-                {region.majorSites?.map((site) => (
+        <View style={styles.mapContainer}>
+          <MapView style={styles.map} initialRegion={initialRegion}>
+            {TigerMap.map(tiger => {
+              if (
+                selectedSubspecies &&
+                selectedSubspecies !== tiger.subspecies
+              ) {
+                return null;
+              }
+
+              return tiger.regions.map(region => (
+                <React.Fragment key={`${tiger.subspecies}-${region.country}`}>
                   <Marker
-                    key={`${tiger.subspecies}-${site.name}`}
-                    coordinate={formatCoordinates(site.coordinates)}
+                    coordinate={formatCoordinates(region.coordinates)}
                     pinColor={getMarkerColor(tiger.subspecies)}
-                    onCalloutPress={() => handleViewDetails(tiger.scientificName)}
-                  >
+                    onCalloutPress={() =>
+                      handleViewDetails(tiger.scientificName)
+                    }>
                     <Callout>
                       <View style={styles.callout}>
-                        <Text style={styles.calloutTitle}>{site.name}</Text>
-                        <Text style={styles.calloutSubtitle}>
-                          {tiger.subspecies} habitat
+                        <Text style={styles.calloutTitle}>
+                          {tiger.subspecies}
                         </Text>
-                        <Text style={styles.calloutText}>
+                        <Text style={styles.calloutSubtitle}>
                           {region.country}
                         </Text>
+                        <Text style={styles.calloutText}>
+                          {tiger.scientificName}
+                        </Text>
+                        {region.status && (
+                          <Text style={[styles.calloutText, styles.statusText]}>
+                            Status: {region.status}
+                          </Text>
+                        )}
                         <View style={styles.detailsButton}>
-                          <Text style={styles.detailsButtonText}>View Details</Text>
+                          <Text style={styles.detailsButtonText}>
+                            View Details
+                          </Text>
                         </View>
                       </View>
                     </Callout>
                   </Marker>
-                ))}
-              </React.Fragment>
-            ));
-          })}
-        </MapView>
-      </View>
-    </SafeAreaView>
+                  {/* Major sites markers */}
+                  {region.majorSites?.map(site => (
+                    <Marker
+                      key={`${tiger.subspecies}-${site.name}`}
+                      coordinate={formatCoordinates(site.coordinates)}
+                      pinColor={getMarkerColor(tiger.subspecies)}
+                      onCalloutPress={() =>
+                        handleViewDetails(tiger.scientificName)
+                      }>
+                      <Callout>
+                        <View style={styles.callout}>
+                          <Text style={styles.calloutTitle}>{site.name}</Text>
+                          <Text style={styles.calloutSubtitle}>
+                            {tiger.subspecies} habitat
+                          </Text>
+                          <Text style={styles.calloutText}>
+                            {region.country}
+                          </Text>
+                          <View style={styles.detailsButton}>
+                            <Text style={styles.detailsButtonText}>
+                              View Details
+                            </Text>
+                          </View>
+                        </View>
+                      </Callout>
+                    </Marker>
+                  ))}
+                </React.Fragment>
+              ));
+            })}
+          </MapView>
+        </View>
+      </SafeAreaView>
+    </TabLayout>
   );
 };
 
@@ -146,17 +167,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    // backgroundColor: '#1A1A1A',
   },
   title: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#FF4444',
+    color: '#FF8C00',
     textAlign: 'center',
     marginVertical: 15,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: -1, height: 1},
-    textShadowRadius: 10
+    textShadowRadius: 10,
   },
   subspeciesScroll: {
     maxHeight: 50,
@@ -180,11 +201,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   mapContainer: {
-    flex: 8/9,
+    flex: 8 / 9,
     margin: 10,
     borderRadius: 20,
     overflow: 'hidden',
-    borderWidth: 1,
+    borderWidth: 3,
     borderColor: '#FF8C00',
   },
   map: {
@@ -224,5 +245,5 @@ const styles = StyleSheet.create({
     color: '#FF4444',
     fontWeight: 'bold',
     marginTop: 3,
-  }
+  },
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   StyleSheet,
   Text,
@@ -8,9 +8,11 @@ import {
   Image,
   SafeAreaView,
   Alert,
+  ScrollView,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { launchImageLibrary } from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
+import TabLayout from '../../components/layout/TabLayout';
 
 const TabMainScreen = () => {
   const [user, setUser] = useState(null);
@@ -97,7 +99,7 @@ const TabMainScreen = () => {
       maxWidth: 2000,
     };
 
-    launchImageLibrary(options, (response) => {
+    launchImageLibrary(options, response => {
       if (response.didCancel) {
         return;
       }
@@ -112,10 +114,11 @@ const TabMainScreen = () => {
   };
 
   const renderProfile = () => (
+    // <TabLayout>
     <View style={styles.profileContainer}>
       <TouchableOpacity onPress={selectImage} style={styles.imageContainer}>
         {imageUri ? (
-          <Image source={{ uri: imageUri }} style={styles.profileImage} />
+          <Image source={{uri: imageUri}} style={styles.profileImage} />
         ) : (
           <View style={styles.placeholderImage}>
             <Text style={styles.placeholderText}>Add Photo</Text>
@@ -180,31 +183,39 @@ const TabMainScreen = () => {
         </View>
       )}
     </View>
+    // </TabLayout>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>Profile</Text>
-      {renderProfile()}
-    </SafeAreaView>
+    <TabLayout>
+      <ScrollView style={styles.container}>
+        <Text style={styles.title}>Profile</Text>
+        {renderProfile()}
+      </ScrollView>
+    </TabLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
-    padding: 20,
+    // backgroundColor: '#1A1A1A',
+    padding: 60,
   },
   title: {
     fontSize: 32,
     fontWeight: 'bold',
-    color: '#FF4444',
+    color: '#FF8C00',
     textAlign: 'center',
     marginBottom: 30,
   },
   profileContainer: {
     alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: '#FF8C00',
   },
   imageContainer: {
     marginBottom: 20,
@@ -214,7 +225,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 75,
     borderWidth: 3,
-    borderColor: '#FF4444',
+    borderColor: '#FF8C00',
   },
   placeholderImage: {
     width: 150,
@@ -224,10 +235,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: '#FF4444',
+    borderColor: '#FF8C00',
   },
   placeholderText: {
-    color: '#FF4444',
+    color: '#FF8C00',
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -247,7 +258,7 @@ const styles = StyleSheet.create({
     color: 'white',
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: '#FF4444',
+    borderColor: '#FF8C00',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -262,20 +273,20 @@ const styles = StyleSheet.create({
     minWidth: 120,
   },
   editButton: {
-    backgroundColor: '#FF4444',
+    backgroundColor: '#FF8C00',
   },
   deleteButton: {
-    backgroundColor: 'rgba(255, 68, 68, 0.2)',
+    backgroundColor: 'rgba(255, 140, 0, 0.3)',
     borderWidth: 1,
-    borderColor: '#FF4444',
+    borderColor: '#FF8C00',
   },
   saveButton: {
-    backgroundColor: '#FF4444',
+    backgroundColor: '#FF8C00',
   },
   cancelButton: {
-    backgroundColor: 'rgba(255, 68, 68, 0.2)',
+    backgroundColor: 'rgba(255, 140, 0, 0.3)',
     borderWidth: 1,
-    borderColor: '#FF4444',
+    borderColor: '#FF8C00',
   },
   buttonText: {
     color: 'white',
@@ -287,7 +298,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   infoText: {
-    color: '#666',
+    color: 'white',
     fontSize: 14,
     marginBottom: 5,
   },
