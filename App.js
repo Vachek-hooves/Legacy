@@ -5,6 +5,7 @@ import TabNavigation from './Navigation/TabNavigation';
 import {
   StackFIrstDeath,
   StackQuizResults,
+  StackSurviveStories,
   StackTigerHabitatDetailsScreen,
   StackTimeChallengeScreen,
   StackWelcomeScreen,
@@ -42,6 +43,10 @@ function App() {
           <Stack.Screen
             name="StackSurviveStorieDetails"
             component={StackSurviveStorieDetails}
+          />
+          <Stack.Screen
+            name="StackSurviveStories"
+            component={StackSurviveStories}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -13,12 +13,14 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
 import TabLayout from '../../components/layout/TabLayout';
+import { useNavigation } from '@react-navigation/native';
 
 const TabMainScreen = () => {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [imageUri, setImageUri] = useState(null);
+  const navigation = useNavigation();
 
   useEffect(() => {
     loadUserData();
@@ -113,6 +115,10 @@ const TabMainScreen = () => {
     });
   };
 
+  const navigateToStories = () => {
+    navigation.navigate('StackSurviveStories');
+  };
+
   const renderProfile = () => (
     // <TabLayout>
     <View style={styles.profileContainer}>
@@ -182,6 +188,15 @@ const TabMainScreen = () => {
           </Text>
         </View>
       )}
+
+      {user ? (
+        <TouchableOpacity
+          style={styles.storiesButton}
+          onPress={navigateToStories}
+        >
+          <Text style={styles.storiesButtonText}>🐯 Tiger Stories</Text>
+        </TouchableOpacity>
+      ) : null}
     </View>
     // </TabLayout>
   );
@@ -301,6 +316,21 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 14,
     marginBottom: 5,
+  },
+  storiesButton: {
+    backgroundColor: 'rgba(255, 68, 68, 0.1)',
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 20,
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: '#FF4444',
+  },
+  storiesButtonText: {
+    color: '#FF4444',
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
 });
 

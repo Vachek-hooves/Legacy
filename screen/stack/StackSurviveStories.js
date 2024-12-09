@@ -53,6 +53,11 @@ const StackSurviveStories = () => {
   return (
     <TabSurvivalLayout>
       <SafeAreaView style={styles.container}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>← Back to Map</Text>
+        </TouchableOpacity>
         <Text style={styles.title}>Tiger Survival Stories</Text>
         <Text style={styles.points}>
           Available Points: {highScores.survival || 0}
@@ -102,7 +107,7 @@ const StackSurviveStories = () => {
             );
           })}
         </ScrollView>
-        <View style={{height: 90}} />
+        {/* <View style={{height: 90}} /> */}
       </SafeAreaView>
     </TabSurvivalLayout>
   );
@@ -112,6 +117,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: '#1A1A1A',
+  },
+  backButton: {
+    marginBottom: 20,
+    marginHorizontal: 20,
+  },
+  backButtonText: {
+    color: '#FF8C00',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 28,
@@ -159,7 +173,7 @@ const styles = StyleSheet.create({
   costText: {
     color: '#FF8C00',
     fontSize: 14,
-    color:'white'
+    color: 'white',
   },
   unlockButton: {
     backgroundColor: '#FF4444',
@@ -179,13 +193,12 @@ const styles = StyleSheet.create({
   lockedContent: {
     padding: 20,
     alignItems: 'center',
-    
   },
   lockedText: {
     // color: '#666',
     fontSize: 16,
     textAlign: 'center',
-    color:'white'
+    color: 'white',
   },
 });
 
