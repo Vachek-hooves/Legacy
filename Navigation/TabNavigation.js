@@ -8,6 +8,7 @@ import {
   TabQuizScreen,
   TabTigerMapScreen,
 } from '../screen/tab';
+import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 
 const Tab = createBottomTabNavigator();
 
@@ -65,10 +66,10 @@ const TabNavigation = () => {
         name="TabArticleScreen"
         component={TabArticleScreen}
         options={{
-          tabBarLabel: 'Articles',
+          tabBarLabel: 'Achieves',
           tabBarIcon: ({color, size}) => (
             <View style={styles.iconContainer}>
-              <Icon name="newspaper-sharp" size={size} color={color} />
+              <FontAwesome name="award" size={size} color={color} />
             </View>
           ),
         }}

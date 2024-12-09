@@ -5,8 +5,8 @@ import {StackSurviveStories} from '../stack';
 const TabArticleScreen = () => {
   return (
     <View style={styles.container}>
-      {/* <StackStatisticScreen /> */}
-      <StackSurviveStories />
+      <StackStatisticScreen />
+      {/* <StackSurviveStories /> */}
     </View>
   );
 };
