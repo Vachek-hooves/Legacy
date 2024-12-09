@@ -14,9 +14,16 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
   const { scientificName } = route.params;
   
   // Find tiger data from encyclopedia
+  
   const tigerData = Object.values(TigerEncyclopedia).find(
+    
     tiger => tiger.scientificName === scientificName
   );
+  
+  // const tigerRandomImage=tigerData.image[Math.floor(Math.random() * tigerData.image.length)]
+  // console.log('tigerRandomImage', tigerRandomImage);
+  // console.log('tigerData', tigerData.image.length);
+  
 
   if (!tigerData) {
     return (
