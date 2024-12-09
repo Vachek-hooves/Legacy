@@ -10,6 +10,7 @@ export const AppContextProvider = ({children}) => {
     survival: 0,
     total: 0,
     unlockedStories: [],
+   
   });
   const [gamesPlayed, setGamesPlayed] = useState({
     timeChallenge: 0,
@@ -121,6 +122,7 @@ export const AppContextProvider = ({children}) => {
     getRandomQuestion,
     updateHighScore,
     saveQuizResult,
+    incrementGamesPlayed,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -12,7 +12,13 @@ import {useAppContext} from '../../store/context';
 import QuizLayout from '../../components/layout/QuizLayout';
 
 const StackFirstDeath = ({navigation}) => {
-  const {getRandomQuestion, updateHighScore, saveQuizResult} = useAppContext();
+  const {
+    getRandomQuestion, 
+    updateHighScore, 
+    saveQuizResult,
+    incrementGamesPlayed
+  } = useAppContext();
+  
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [usedQuestionIds, setUsedQuestionIds] = useState([]);
@@ -27,7 +33,6 @@ const StackFirstDeath = ({navigation}) => {
     setCurrentQuestion(question);
     setUsedQuestionIds([...usedQuestionIds, question.id]);
 
-    // Animate question transition
     Animated.sequence([
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -49,12 +54,17 @@ const StackFirstDeath = ({navigation}) => {
       await updateHighScore('survival', newScore);
       getNextQuestion();
     } else {
-      await saveQuizResult('survival', score, null);
-      navigation.replace('StackQuizResults', {
-        mode: 'survival',
-        score: score,
-        message: 'Game Over! You made it to:',
-      });
+      try {
+        await saveQuizResult('survival', score, null);
+        await incrementGamesPlayed('survival');
+        navigation.replace('StackQuizResults', {
+          mode: 'survival',
+          score: score,
+          message: 'Game Over! You made it to:',
+        });
+      } catch (error) {
+        console.error('Error ending game:', error);
+      }
     }
   };
 

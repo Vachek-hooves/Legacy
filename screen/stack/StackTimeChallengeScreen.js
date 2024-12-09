@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {
   StyleSheet,
   Text,
@@ -11,10 +11,15 @@ import {
 import {useAppContext} from '../../store/context';
 import QuizLayout from '../../components/layout/QuizLayout';
 
-const GAME_DURATION = 30; 
+const GAME_DURATION = 10; 
 
 const StackTimeChallengeScreen = ({navigation}) => {
-  const {getRandomQuestion, updateHighScore, saveQuizResult} = useAppContext();
+  const {
+    getRandomQuestion, 
+    updateHighScore, 
+    saveQuizResult, 
+    incrementGamesPlayed
+  } = useAppContext();
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
@@ -23,6 +28,30 @@ const StackTimeChallengeScreen = ({navigation}) => {
   const [isGameOver, setIsGameOver] = useState(false);
   const timerRef = useRef(null);
   const scoreRef = useRef(0);
+
+  const handleGameOver = useCallback(async () => {
+    if (isGameOver) return;
+    setIsGameOver(true);
+    clearInterval(timerRef.current);
+
+    const finalScore = scoreRef.current;
+    
+    setTimeout(async () => {
+      try {
+        await saveQuizResult('timeChallenge', finalScore, GAME_DURATION);
+        await updateHighScore('timeChallenge', finalScore);
+        await incrementGamesPlayed('timeChallenge');
+        
+        navigation.replace('StackQuizResults', {
+          mode: 'timeChallenge',
+          score: finalScore,
+          message: 'Time\'s up! Your score:',
+        });
+      } catch (error) {
+        console.error('Error in handleGameOver:', error);
+      }
+    }, 0);
+  }, [isGameOver, navigation, saveQuizResult, updateHighScore, incrementGamesPlayed]);
 
   useEffect(() => {
     scoreRef.current = score;
@@ -34,6 +63,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
       setCurrentQuestion(question);
       setUsedQuestionIds([question.id]);
       setScore(0);
+      scoreRef.current = 0;
       setTimeLeft(GAME_DURATION);
       setIsGameOver(false);
     };
@@ -48,43 +78,21 @@ const StackTimeChallengeScreen = ({navigation}) => {
     };
   }, []);
 
-  const startTimer = () => {
+  const startTimer = useCallback(() => {
     timerRef.current = setInterval(() => {
-      setTimeLeft(prev => {
+      setTimeLeft((prev) => {
         if (prev <= 1) {
-          clearInterval(timerRef.current);
           handleGameOver();
           return 0;
         }
         return prev - 1;
       });
     }, 1000);
-  };
+  }, [handleGameOver]);
 
-  const handleGameOver = async () => {
+  const handleAnswer = useCallback((selectedAnswer) => {
     if (isGameOver) return;
-    setIsGameOver(true);
-
-    try {
-      const finalScore = scoreRef.current;
-      console.log('Final Score:', finalScore);
-
-      await saveQuizResult('timeChallenge', finalScore, GAME_DURATION);
-      await updateHighScore('timeChallenge', finalScore);
-
-      navigation.replace('StackQuizResults', {
-        mode: 'timeChallenge',
-        score: finalScore,
-        message: "Time's up! Your score:",
-      });
-    } catch (error) {
-      console.error('Error in handleGameOver:', error);
-    }
-  };
-
-  const handleAnswer = async selectedAnswer => {
-    if (isGameOver) return;
-
+    
     if (selectedAnswer === currentQuestion.answer) {
       setScore(prevScore => {
         const newScore = prevScore + 1;
@@ -93,11 +101,11 @@ const StackTimeChallengeScreen = ({navigation}) => {
       });
     }
     getNextQuestion();
-  };
+  }, [currentQuestion, isGameOver, getNextQuestion]);
 
-  const getNextQuestion = () => {
+  const getNextQuestion = useCallback(() => {
     const question = getRandomQuestion(usedQuestionIds);
-
+    
     if (!question) {
       const newQuestion = getRandomQuestion([]);
       setUsedQuestionIds([newQuestion.id]);
@@ -106,7 +114,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
       setCurrentQuestion(question);
       setUsedQuestionIds(prev => [...prev, question.id]);
     }
-
+    
     Animated.sequence([
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -119,7 +127,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
         useNativeDriver: true,
       }),
     ]).start();
-  };
+  }, [usedQuestionIds, getRandomQuestion, fadeAnim]);
 
   if (!currentQuestion) return null;
 
