@@ -9,6 +9,7 @@ import {
   StackTimeChallengeScreen,
 } from './screen/stack';
 import {AppContextProvider} from './store/context';
+import StackSurviveStorieDetails from './screen/stack/StackSurviveStorieDetails';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,10 @@ function App() {
           <Stack.Screen
             name="StackTigerHabitatDetails"
             component={StackTigerHabitatDetailsScreen}
+          />
+          <Stack.Screen
+            name="StackSurviveStorieDetails"
+            component={StackSurviveStorieDetails}
           />
         </Stack.Navigator>
       </NavigationContainer>

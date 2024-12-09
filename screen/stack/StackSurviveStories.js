@@ -8,18 +8,20 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import { useAppContext } from '../../store/context';
-import { TigerSurvive } from '../../data/survive';
+import {useAppContext} from '../../store/context';
+import {TigerSurvive} from '../../data/survive';
+import {useNavigation} from '@react-navigation/native';
 
 const StackSurviveStories = () => {
-  const { highScores, unlockStory } = useAppContext();
+  const navigation = useNavigation();
+  const {highScores, unlockStory} = useAppContext();
 
   const handleUnlock = (storyId, cost) => {
     if (!highScores.survival || highScores.survival < cost) {
       Alert.alert(
         'Insufficient Points',
         `You need ${cost} survival points to unlock this story. Keep playing to earn more points!`,
-        [{ text: 'OK' }]
+        [{text: 'OK'}],
       );
       return;
     }
@@ -28,7 +30,7 @@ const StackSurviveStories = () => {
       'Unlock Story',
       `Do you want to spend ${cost} points to unlock this story?`,
       [
-        { text: 'Cancel', style: 'cancel' },
+        {text: 'Cancel', style: 'cancel'},
         {
           text: 'Unlock',
           style: 'default',
@@ -37,27 +39,37 @@ const StackSurviveStories = () => {
             if (!success) {
               Alert.alert('Error', 'Failed to unlock story. Please try again.');
             }
-          }
-        }
-      ]
+          },
+        },
+      ],
     );
   };
 
-  const isStoryUnlocked = (storyId) => {
+  const isStoryUnlocked = storyId => {
     return highScores.unlockedStories?.includes(storyId) || false;
   };
+  
 
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Tiger Survival Stories</Text>
-      <Text style={styles.points}>Available Points: {highScores.survival || 0}</Text>
-      
+      <Text style={styles.points}>
+        Available Points: {highScores.survival || 0}
+      </Text>
+
       <ScrollView style={styles.scrollView}>
-        {TigerSurvive.map((story) => {
+        {TigerSurvive.map(story => {
           const unlocked = isStoryUnlocked(story.id);
-          
+
           return (
-            <View key={story.id} style={styles.storyCard}>
+            <TouchableOpacity
+              key={story.id}
+              style={styles.storyCard}
+              onPress={() =>
+                navigation.navigate('StackSurviveStorieDetails', {
+                  storyId: story.id,
+                })
+              }>
               <View style={styles.storyHeader}>
                 <View style={styles.titleContainer}>
                   <Text style={styles.storyTitle}>{story.title}</Text>
@@ -70,8 +82,7 @@ const StackSurviveStories = () => {
                 {!unlocked && (
                   <TouchableOpacity
                     style={styles.unlockButton}
-                    onPress={() => handleUnlock(story.id, 1)}
-                  >
+                    onPress={() => handleUnlock(story.id, 1)}>
                     <Text style={styles.unlockButtonText}>🔓 Unlock</Text>
                   </TouchableOpacity>
                 )}
@@ -86,11 +97,11 @@ const StackSurviveStories = () => {
                   </Text>
                 </View>
               )}
-            </View>
+            </TouchableOpacity>
           );
         })}
       </ScrollView>
-      <View style={{height: 90}}/>
+      <View style={{height: 90}} />
     </SafeAreaView>
   );
 };
