@@ -7,6 +7,7 @@ import {
   StackQuizResults,
   StackTigerHabitatDetailsScreen,
   StackTimeChallengeScreen,
+  StackWelcomeScreen,
 } from './screen/stack';
 import {AppContextProvider} from './store/context';
 import StackSurviveStorieDetails from './screen/stack/StackSurviveStorieDetails';
@@ -18,7 +19,10 @@ function App() {
     <AppContextProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
-          
+          <Stack.Screen
+            name="StackWelcomeScreen"
+            component={StackWelcomeScreen}
+          />
           <Stack.Screen name="TabNavigation" component={TabNavigation} />
           <Stack.Screen name="StackFirstDeath" component={StackFIrstDeath} />
           <Stack.Screen
