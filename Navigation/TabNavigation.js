@@ -1,6 +1,6 @@
-import React,{useState,useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet, View, Platform,TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Platform, TouchableOpacity,AppState} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   TabArticleScreen,
@@ -9,16 +9,42 @@ import {
   TabTigerMapScreen,
 } from '../screen/tab';
 import FontAwesome from 'react-native-vector-icons/FontAwesome5';
+import {
+  toggleBackgroundMusic,
+  setupPlayer,
+  pauseBackgroundMusic,
+  playBackgroundMusic,
+} from '../setUpSound/setPlayer';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const [isPlayMusic, setIsPlayMusic] = useState(false);
 
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (nextAppState === 'active' && isPlayMusic) {
+        playBackgroundMusic();
+      } else if (nextAppState === 'inactive' || nextAppState === 'background') {
+        pauseBackgroundMusic();
+      }
+    });
+    const initMusic = async () => {
+      await setupPlayer();
+      await playBackgroundMusic();
+      setIsPlayMusic(true);
+    };
+    initMusic();
+
+    return () => {
+      subscription.remove();
+      pauseBackgroundMusic();
+    };
+  }, []);
+
   const handlePlayMusicToggle = () => {
-    // const newState = toggleBackgroundMusic();
-    // setIsPlayMusic(newState);
-    setIsPlayMusic(!isPlayMusic);
+    const newState = toggleBackgroundMusic();
+    setIsPlayMusic(newState);
   };
 
   return (
@@ -30,8 +56,7 @@ const TabNavigation = () => {
         tabBarActiveTintColor: '#FF8C00',
         tabBarInactiveTintColor: '#FFFFFF',
         tabBarLabelStyle: styles.tabLabel,
-        animation:'fade',
-        
+        animation: 'fade',
       }}>
       <Tab.Screen
         name="TabMainScreen"
@@ -96,7 +121,7 @@ const TabNavigation = () => {
               />
             </TouchableOpacity>
           ),
-         
+
           tabBarLabelStyle: {
             fontSize: 14,
             fontWeight: '500',
@@ -134,7 +159,7 @@ const styles = StyleSheet.create({
     paddingTop: 5,
     borderWidth: 1,
     // borderColor: '#FF4444',
-    borderColor:'#FF8C00',
+    borderColor: '#FF8C00',
     ...Platform.select({
       android: {
         elevation: 5,

@@ -32,6 +32,10 @@
 		<key>NSAllowsLocalNetworking</key>
 		<true/>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>App need access to camera to take photos of your profile</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>App need access to photo library to add images to your profile</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

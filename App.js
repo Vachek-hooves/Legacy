@@ -13,6 +13,7 @@ import {
 import {AppContextProvider} from './store/context';
 import StackSurviveStorieDetails from './screen/stack/StackSurviveStorieDetails';
 
+
 const Stack = createNativeStackNavigator();
 
 function App() {
