@@ -1,5 +1,5 @@
 export const TigerSurvive = [
-  {
+  {id:'story_1',
     title: 'Saving the Sundarbans Tigers',
     focus: 'Bengal Tigers',
     location: 'Sundarbans, India and Bangladesh',
@@ -13,7 +13,7 @@ export const TigerSurvive = [
     ],
     outcomes: 'Significant strides in protecting the Sundarbans tigers',
   },
-  {
+  {id:'story_2',
     title: 'The Mystery of the South China Tiger',
     focus: 'South China Tigers',
     location: 'Southern China',
@@ -25,7 +25,7 @@ export const TigerSurvive = [
     ],
     outcomes: 'Insights into rewilding challenges, hope for recovery',
   },
-  {
+  {id:'story_3',
     title: 'Sumatran Tiger Guardians',
     focus: 'Sumatran Tigers',
     location: 'Sumatra, Indonesia',
@@ -37,7 +37,7 @@ export const TigerSurvive = [
     ],
     outcomes: 'Reduced illegal activities, raised awareness',
   },
-  {
+  {id:'story_4',
     title: 'Malayan Tigers and Cultural Pride',
     focus: 'Malayan Tigers',
     location: 'Malay Peninsula',
@@ -50,7 +50,7 @@ export const TigerSurvive = [
     ],
     outcomes: 'Increased funding and stricter enforcement',
   },
-  {
+  {id:'story_5',
     title: 'The Fight Against Tiger Trafficking',
     focus: 'Global Tiger Populations',
     challenges: ['Illegal wildlife trade', 'Demand for tiger parts'],

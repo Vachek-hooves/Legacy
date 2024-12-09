@@ -8,6 +8,8 @@ export const AppContextProvider = ({children}) => {
   const [highScores, setHighScores] = useState({
     timeChallenge: 0,
     survival: 0,
+    total: 0,
+    unlockedStories: [],
   });
   const [gamesPlayed, setGamesPlayed] = useState({
     timeChallenge: 0,
@@ -85,10 +87,38 @@ export const AppContextProvider = ({children}) => {
     }
   };
 
+  const unlockStory = async (storyId, cost) => {
+    try {
+      const currentUnlocked = highScores.unlockedStories || [];
+      
+      if (currentUnlocked.includes(storyId)) {
+        return true;
+      }
+
+      if (highScores.survival >= cost) {
+        const newHighScores = {
+          ...highScores,
+          survival: highScores.survival - cost,
+          unlockedStories: [...currentUnlocked, storyId]
+        };
+        
+        setHighScores(newHighScores);
+        await AsyncStorage.setItem('highScores', JSON.stringify(newHighScores));
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error unlocking story:', error);
+      return false;
+    }
+  };
+
   const value = {
     highScores,
+    setHighScores,
     quizHistory,
     gamesPlayed,
+    unlockStory,
     getRandomQuestion,
     updateHighScore,
     saveQuizResult,

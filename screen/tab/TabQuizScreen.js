@@ -27,6 +27,12 @@ const TabQuizScreen = ({navigation}) => {
               {Math.max(highScores.survival, highScores.timeChallenge)}
             </Text>
           </View>
+          <View style={styles.statItem}>
+            <Text style={styles.statLabel}>Total Score</Text>
+            <Text style={styles.statValue}>
+              {highScores.timeChallenge + highScores.survival}
+            </Text>
+          </View>
         </View>
 
         <TouchableOpacity 
@@ -103,18 +109,18 @@ const styles = StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
+    flexWrap: 'wrap',
     marginBottom: 30,
+    gap: 10,
   },
   statItem: {
     alignItems: 'center',
     backgroundColor: 'rgba(255, 140, 0, 0.1)',
     padding: 15,
     borderRadius: 15,
-    minWidth: 140,
+    minWidth: 100,
     borderWidth: 1,
-    borderColor: '#FF8C00',
     borderColor: '#FF4444',
-    
   },
   statLabel: {
     fontSize: 14,
