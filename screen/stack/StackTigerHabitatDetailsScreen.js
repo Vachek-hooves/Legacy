@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   tigerImage: {
     width: '100%',
-    height: 200,
+    height: 400,
     borderRadius: 15,
     marginBottom: 20,
   },
