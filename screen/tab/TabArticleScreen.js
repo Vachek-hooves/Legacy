@@ -1,14 +1,19 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import {StyleSheet, Text, View} from 'react-native';
+import {StackStatisticScreen} from '../stack';
 
 const TabArticleScreen = () => {
   return (
-    <View>
-      <Text>TabArticleScreen</Text>
+    <View style={styles.container}>
+      <StackStatisticScreen />
     </View>
-  )
-}
+  );
+};
 
-export default TabArticleScreen
+export default TabArticleScreen;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#1A1A1A',
+  },
+});

@@ -58,7 +58,7 @@ const TabNavigation = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
+      <Tab.Screen
         name="TabArticleScreen"
         component={TabArticleScreen}
         options={{
@@ -69,7 +69,7 @@ const TabNavigation = () => {
             </View>
           ),
         }}
-      /> */}
+      />
     </Tab.Navigator>
   );
 };

@@ -3,6 +3,8 @@ import StackFIrstDeath from './StackFIrstDeath';
 import StackQuizResults from './StackQuizResults';
 import StackEnciclopediaScreen from './StackEnciclopediaScreen';
 import StackTigerHabitatDetailsScreen from './StackTigerHabitatDetailsScreen';
+import StackStatisticScreen from './StackStatisticScreen';
+import StackRealStoriesScreen from './StackRealStoriesScreen';
 
 export {
   StackTimeChallengeScreen,
@@ -10,4 +12,6 @@ export {
   StackQuizResults,
   StackEnciclopediaScreen,
   StackTigerHabitatDetailsScreen,
+  StackStatisticScreen,
+  StackRealStoriesScreen,
 };
