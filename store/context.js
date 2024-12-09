@@ -48,12 +48,14 @@ export const AppContextProvider = ({children}) => {
     try {
       const newHighScores = {
         ...highScores,
-        [mode]: Math.max(highScores[mode], score)
+        [mode]: Math.max(highScores[mode], score),
       };
+      newHighScores.total = newHighScores.timeChallenge + newHighScores.survival;
+      
       setHighScores(newHighScores);
       await AsyncStorage.setItem('highScores', JSON.stringify(newHighScores));
     } catch (error) {
-      console.error('Error saving high score:', error);
+      console.error('Error updating high score:', error);
     }
   };
 
@@ -71,17 +73,14 @@ export const AppContextProvider = ({children}) => {
   };
 
   const saveQuizResult = async (mode, score, duration) => {
+    console.log(mode, score, duration);
     try {
-      const newResult = {
-        mode,
-        score,
-        duration,
-        date: new Date().toISOString(),
-      };
-      const updatedHistory = [newResult, ...quizHistory].slice(0, 10);
-      setQuizHistory(updatedHistory);
-      await AsyncStorage.setItem('quizHistory', JSON.stringify(updatedHistory));
-      await incrementGamesPlayed(mode);
+      const newHistory = [
+        ...quizHistory,
+        { mode, score, duration, date: new Date().toISOString() },
+      ];
+      setQuizHistory(newHistory);
+      await AsyncStorage.setItem('quizHistory', JSON.stringify(newHistory));
     } catch (error) {
       console.error('Error saving quiz result:', error);
     }

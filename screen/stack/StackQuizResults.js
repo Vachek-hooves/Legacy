@@ -11,6 +11,7 @@ import { useAppContext } from '../../store/context';
 
 const StackQuizResults = ({ route, navigation }) => {
   const { mode, score, message } = route.params;
+  console.log(score)
   const { highScores, gamesPlayed } = useAppContext();
 
   const isNewHighScore = score >= highScores[mode];

@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useAppContext} from '../../store/context';
 
-const GAME_DURATION = 90; // 90 seconds
+const GAME_DURATION = 10; // 90 seconds
 
 const StackTimeChallengeScreen = ({navigation}) => {
   const {getRandomQuestion, updateHighScore, saveQuizResult} = useAppContext();
@@ -19,12 +19,32 @@ const StackTimeChallengeScreen = ({navigation}) => {
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [usedQuestionIds, setUsedQuestionIds] = useState([]);
   const [fadeAnim] = useState(new Animated.Value(1));
+  const [isGameOver, setIsGameOver] = useState(false);
   const timerRef = useRef(null);
+  const scoreRef = useRef(0);
 
   useEffect(() => {
-    getNextQuestion();
+    scoreRef.current = score;
+  }, [score]);
+
+  useEffect(() => {
+    const initGame = () => {
+      const question = getRandomQuestion([]);
+      setCurrentQuestion(question);
+      setUsedQuestionIds([question.id]);
+      setScore(0);
+      setTimeLeft(GAME_DURATION);
+      setIsGameOver(false);
+    };
+    
+    initGame();
     startTimer();
-    return () => clearInterval(timerRef.current);
+    
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
   }, []);
 
   const startTimer = () => {
@@ -41,75 +61,88 @@ const StackTimeChallengeScreen = ({navigation}) => {
   };
 
   const handleGameOver = async () => {
-    await saveQuizResult('timeChallenge', score, GAME_DURATION);
-    await updateHighScore('timeChallenge', score);
-    navigation.replace('StackQuizResults', {
-      mode: 'timeChallenge',
-      score: score,
-      message: 'Time\'s up! Your score:',
-    });
+    if (isGameOver) return;
+    setIsGameOver(true);
+    
+    try {
+      const finalScore = scoreRef.current;
+      console.log('Final Score:', finalScore);
+      
+      await saveQuizResult('timeChallenge', finalScore, GAME_DURATION);
+      await updateHighScore('timeChallenge', finalScore);
+      
+      navigation.replace('StackQuizResults', {
+        mode: 'timeChallenge',
+        score: finalScore,
+        message: 'Time\'s up! Your score:',
+      });
+    } catch (error) {
+      console.error('Error in handleGameOver:', error);
+    }
+  };
+
+  const handleAnswer = async (selectedAnswer) => {
+    if (isGameOver) return;
+    
+    if (selectedAnswer === currentQuestion.answer) {
+      setScore(prevScore => {
+        const newScore = prevScore + 1;
+        scoreRef.current = newScore;
+        return newScore;
+      });
+    }
+    getNextQuestion();
   };
 
   const getNextQuestion = () => {
     const question = getRandomQuestion(usedQuestionIds);
     
-    // If we run out of questions, reset the used questions array
     if (!question) {
-        setUsedQuestionIds([]);
-        setCurrentQuestion(getRandomQuestion([]));
+      const newQuestion = getRandomQuestion([]);
+      setUsedQuestionIds([newQuestion.id]);
+      setCurrentQuestion(newQuestion);
     } else {
-        setCurrentQuestion(question);
-        setUsedQuestionIds([...usedQuestionIds, question.id]);
+      setCurrentQuestion(question);
+      setUsedQuestionIds(prev => [...prev, question.id]);
     }
     
     Animated.sequence([
-        Animated.timing(fadeAnim, {
-            toValue: 0,
-            duration: 200,
-            useNativeDriver: true,
-        }),
-        Animated.timing(fadeAnim, {
-            toValue: 1,
-            duration: 200,
-            useNativeDriver: true,
-        }),
+      Animated.timing(fadeAnim, {
+        toValue: 0,
+        duration: 200,
+        useNativeDriver: true,
+      }),
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: true,
+      }),
     ]).start();
-  };
-
-  const handleAnswer = (selectedAnswer) => {
-    if (selectedAnswer === currentQuestion.answer) {
-      setScore(prev => prev + 1);
-    }
-    getNextQuestion();
   };
 
   if (!currentQuestion) return null;
 
   return (
     <SafeAreaView style={styles.container}>
-
-      
       <View style={styles.header}>
         <Text style={styles.timer}>Time: {timeLeft}s</Text>
         <Text style={styles.score}>Score: {score}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-      <Animated.View style={[styles.questionContainer, {opacity: fadeAnim}]}>
-        <Text style={styles.question}>{currentQuestion.question}</Text>
-
-        <View style={styles.optionsContainer}>
-          {currentQuestion.options.map((option, index) => (
-            <TouchableOpacity
-              key={index}
-              style={styles.optionButton}
-              onPress={() => handleAnswer(option)}
-            >
-              <Text style={styles.optionText}>{option}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </Animated.View>
+        <Animated.View style={[styles.questionContainer, {opacity: fadeAnim}]}>
+          <Text style={styles.question}>{currentQuestion.question}</Text>
+          <View style={styles.optionsContainer}>
+            {currentQuestion.options.map((option, index) => (
+              <TouchableOpacity
+                key={index}
+                style={styles.optionButton}
+                onPress={() => handleAnswer(option)}
+              >
+                <Text style={styles.optionText}>{option}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </Animated.View>
       </ScrollView>
     </SafeAreaView>
   );

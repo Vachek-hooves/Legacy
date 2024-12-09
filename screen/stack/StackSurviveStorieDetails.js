@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
-// import { SurvivalStories } from '../../data/survive';
 import { TigerSurvive } from '../../data/survive';
 
 const StackSurviveStorieDetails = () => {
