@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     color: '#FF8C00',
+    color: '#FF4444',
     textAlign: 'center',
     marginBottom: 10,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 16,
     color: '#FFA500',
+    color: '#FF4444',
     textAlign: 'center',
     marginBottom: 20,
     opacity: 0.8
@@ -111,16 +113,20 @@ const styles = StyleSheet.create({
     minWidth: 140,
     borderWidth: 1,
     borderColor: '#FF8C00',
+    borderColor: '#FF4444',
+    
   },
   statLabel: {
     fontSize: 14,
     color: '#FFA500',
     marginBottom: 5,
+    color: '#FF4444'
   },
   statValue: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FF8C00',
+    color: '#FF4444'
   },
   challengeCard: {
     height: 220,
