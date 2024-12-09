@@ -11,7 +11,7 @@ import {
 import {useAppContext} from '../../store/context';
 import QuizLayout from '../../components/layout/QuizLayout';
 
-const GAME_DURATION = 10; 
+const GAME_DURATION = 45; 
 
 const StackTimeChallengeScreen = ({navigation}) => {
   const {
@@ -134,6 +134,11 @@ const StackTimeChallengeScreen = ({navigation}) => {
   return (
     <QuizLayout>
       <SafeAreaView style={styles.container}>
+      <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </TouchableOpacity>
         <View style={styles.header}>
           <Text style={styles.timer}>Time: {timeLeft}s</Text>
           <Text style={styles.score}>Score: {score}</Text>
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 30,
     marginHorizontal: 20,
-    marginTop: 50,
+    marginTop: 10,
     borderWidth: 1,
     borderColor: 'red',
     padding: 10,
@@ -225,5 +230,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
+  },
+  backButton: {
+    marginBottom: 20,
+  },
+  backButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

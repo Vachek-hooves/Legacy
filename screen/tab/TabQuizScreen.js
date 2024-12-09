@@ -16,7 +16,7 @@ const TabQuizScreen = ({navigation}) => {
   return (
     <TabLayout blur={20}>
       <SafeAreaView style={styles.container}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.content}>
             <Text style={styles.mainTitle}>Tiger Quiz Challenge</Text>
             <Text style={styles.subtitle}>
@@ -88,6 +88,7 @@ const TabQuizScreen = ({navigation}) => {
             </TouchableOpacity>
           </View>
         </ScrollView>
+        <View style={{height: 50}} />
       </SafeAreaView>
     </TabLayout>
   );

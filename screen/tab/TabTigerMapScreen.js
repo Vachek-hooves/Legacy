@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 140, 0, 0.1)',
     borderWidth: 1,
     borderColor: '#FF8C00',
+    justifyContent:'center'
   },
   filterButtonActive: {
     backgroundColor: '#FF8C00',
@@ -234,6 +235,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
     marginTop: 10,
+  
   },
   detailsButtonText: {
     color: 'white',

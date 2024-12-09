@@ -13,12 +13,12 @@ import QuizLayout from '../../components/layout/QuizLayout';
 
 const StackFirstDeath = ({navigation}) => {
   const {
-    getRandomQuestion, 
-    updateHighScore, 
+    getRandomQuestion,
+    updateHighScore,
     saveQuizResult,
-    incrementGamesPlayed
+    incrementGamesPlayed,
   } = useAppContext();
-  
+
   const [score, setScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(null);
   const [usedQuestionIds, setUsedQuestionIds] = useState([]);
@@ -73,6 +73,11 @@ const StackFirstDeath = ({navigation}) => {
   return (
     <QuizLayout>
       <SafeAreaView style={styles.container}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>← Back</Text>
+        </TouchableOpacity>
         <View style={styles.header}>
           <Text style={styles.score}>Score: {score}</Text>
         </View>
@@ -145,7 +150,7 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 40,
-    color:'black'
+    color: 'black',
   },
   optionsContainer: {
     gap: 15,
@@ -161,5 +166,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: 'white',
     textAlign: 'center',
+  },
+  backButton: {
+    marginBottom: 20,
+  },
+  backButtonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

@@ -13,7 +13,7 @@ import {
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {launchImageLibrary} from 'react-native-image-picker';
 import TabLayout from '../../components/layout/TabLayout';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const TabMainScreen = () => {
   const [user, setUser] = useState(null);
@@ -167,12 +167,12 @@ const TabMainScreen = () => {
             <TouchableOpacity
               style={[styles.button, styles.editButton]}
               onPress={() => setIsEditing(true)}>
-              <Text style={styles.buttonText}>Edit Profile</Text>
+              <Text style={styles.buttonText}>Edit</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.button, styles.deleteButton]}
               onPress={deleteUserData}>
-              <Text style={styles.buttonText}>Delete Profile</Text>
+              <Text style={styles.buttonText}>Delete</Text>
             </TouchableOpacity>
           </>
         )}
@@ -189,14 +189,13 @@ const TabMainScreen = () => {
         </View>
       )}
 
-      {user ? (
+      {/* {user ? (
         <TouchableOpacity
           style={styles.storiesButton}
-          onPress={navigateToStories}
-        >
+          onPress={navigateToStories}>
           <Text style={styles.storiesButtonText}>🐯 Tiger Stories</Text>
         </TouchableOpacity>
-      ) : null}
+      ) : null} */}
     </View>
     // </TabLayout>
   );
@@ -206,6 +205,13 @@ const TabMainScreen = () => {
       <ScrollView style={styles.container}>
         <Text style={styles.title}>Profile</Text>
         {renderProfile()}
+        {user ? (
+          <TouchableOpacity
+            style={styles.storiesButton}
+            onPress={navigateToStories}>
+            <Text style={styles.storiesButtonText}>🐯 Tiger Stories</Text>
+          </TouchableOpacity>
+        ) : null}
       </ScrollView>
     </TabLayout>
   );
@@ -318,17 +324,17 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   storiesButton: {
-    backgroundColor: 'rgba(255, 68, 68, 0.1)',
+    backgroundColor: '#FF8C00',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 20,
     marginTop: 20,
     borderWidth: 1,
-    borderColor: '#FF4444',
+    borderColor: '#FF8C00',
   },
   storiesButtonText: {
-    color: '#FF4444',
-    fontSize: 16,
+    color: 'white',
+    fontSize: 26,
     fontWeight: 'bold',
     textAlign: 'center',
   },
