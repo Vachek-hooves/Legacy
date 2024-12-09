@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {useAppContext} from '../../store/context';
 
-const GAME_DURATION = 10; // 90 seconds
+const GAME_DURATION = 60; // 90 seconds
 
 const StackTimeChallengeScreen = ({navigation}) => {
   const {getRandomQuestion, updateHighScore, saveQuizResult} = useAppContext();
@@ -163,20 +163,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 30,
+    marginHorizontal: 20,
+    marginTop: 50,
+    borderWidth: 1,
+    borderColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   timer: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FF4444',
+  
   },
   score: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FF8C00',
+  
   },
   questionContainer: {
     flex: 1,
     justifyContent: 'center',
+    marginHorizontal: 20,
   },
   question: {
     fontSize: 24,

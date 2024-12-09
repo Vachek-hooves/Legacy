@@ -102,6 +102,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
     marginBottom: 30,
+    marginHorizontal: 20,
+    borderWidth: 1,
+    borderColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   score: {
     fontSize: 24,
@@ -111,6 +119,13 @@ const styles = StyleSheet.create({
   questionContainer: {
     flex: 1,
     justifyContent: 'center',
+    marginHorizontal: 20,
+    marginTop: 50,
+    borderWidth: 1,
+    borderColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
   },
   question: {
     fontSize: 24,

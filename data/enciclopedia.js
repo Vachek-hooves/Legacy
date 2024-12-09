@@ -176,9 +176,10 @@ export const TigerEncyclopedia = {
     conservationStatus: 'Functionally Extinct in Wild',
     currentStatus: 'Only exists in captivity',
     conservationEfforts: 'Ongoing rewilding programs',
-    image: [
+    image: 
+    // [
       // require('../assets/image/SouthChina.png'),
       require('../assets/image/SouthChina2.png'),
-    ],
+    // ],
   },
 };
