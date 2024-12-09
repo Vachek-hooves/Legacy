@@ -89,7 +89,7 @@ const StackSurviveStories = () => {
               </View>
 
               {unlocked ? (
-                <Text style={styles.storyContent}>{story.content}</Text>
+                <Text style={styles.storyContent}>Press to read</Text>
               ) : (
                 <View style={styles.lockedContent}>
                   <Text style={styles.lockedText}>
