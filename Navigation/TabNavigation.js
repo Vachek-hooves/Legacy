@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {StyleSheet, View, Platform} from 'react-native';
+import {StyleSheet, View, Platform,TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {
   TabArticleScreen,
@@ -13,6 +13,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome5';
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
+  const [isPlayMusic, setIsPlayMusic] = useState(false);
+
+  const handlePlayMusicToggle = () => {
+    // const newState = toggleBackgroundMusic();
+    // setIsPlayMusic(newState);
+    setIsPlayMusic(!isPlayMusic);
+  };
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -74,9 +82,35 @@ const TabNavigation = () => {
           ),
         }}
       />
+      <Tab.Screen
+        name="Play"
+        component={NillComponent}
+        options={{
+          tabBarLabel: 'Play',
+          tabBarIcon: () => (
+            <TouchableOpacity onPress={handlePlayMusicToggle}>
+              <Icon
+                name="play"
+                size={32}
+                color={isPlayMusic ? '#FF8C00' : '#666'}
+              />
+            </TouchableOpacity>
+          ),
+         
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontWeight: '500',
+            color: isPlayMusic ? '#FF8C00' : '#666',
+            marginTop: 5,
+          },
+        }}
+        listeners={{tabPress: e => e.preventDefault()}}
+      />
     </Tab.Navigator>
   );
 };
+
+const NillComponent = () => null;
 
 const styles = StyleSheet.create({
   tabBar: {
