@@ -18,6 +18,7 @@ function App() {
     <AppContextProvider>
       <NavigationContainer>
         <Stack.Navigator screenOptions={{headerShown: false}}>
+          
           <Stack.Screen name="TabNavigation" component={TabNavigation} />
           <Stack.Screen name="StackFirstDeath" component={StackFIrstDeath} />
           <Stack.Screen
