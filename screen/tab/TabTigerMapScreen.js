@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   mapContainer: {
-    flex: 1,
+    flex: 8/9,
     margin: 10,
     borderRadius: 20,
     overflow: 'hidden',

@@ -64,7 +64,7 @@ export const TigerEncyclopedia = {
       'Can go days without meals due to low prey density',
     ],
     conservationStatus: 'Endangered',
-    image: require('../assets/image/bengaltiger.png'),
+    image: require('../assets/image/Syberia.png'),
   },
 
   sumatranTiger: {
