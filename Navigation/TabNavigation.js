@@ -84,19 +84,32 @@ const styles = StyleSheet.create({
     backgroundColor: '#1A1A1A',
     borderRadius: 15,
     height: 70,
-    shadowColor: '#000',
+    shadowColor: '#FF4444',
     shadowOffset: {
       width: 0,
       height: 4,
     },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.5,
     shadowRadius: 4,
     paddingBottom: 5,
     paddingTop: 5,
-    borderTopWidth: 0,
-    borderColor: 'red',
-    marginHorizontal: 10,
-    
+    borderWidth: 1,
+    borderColor: '#FF4444',
+    ...Platform.select({
+      android: {
+        elevation: 5,
+      },
+      ios: {
+        shadowColor: '#FF4444',
+        shadowOffset: {
+          width: 0,
+          height: 4,
+        },
+        shadowOpacity: 0.5,
+        shadowRadius: 4,
+      },
+    }),
+    marginHorizontal:10
   },
   iconContainer: {
     width: 40,
