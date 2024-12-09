@@ -1,10 +1,12 @@
 import {StyleSheet, Text, View} from 'react-native';
 import {StackStatisticScreen} from '../stack';
+import {StackSurviveStories} from '../stack';
 
 const TabArticleScreen = () => {
   return (
     <View style={styles.container}>
-      <StackStatisticScreen />
+      {/* <StackStatisticScreen /> */}
+      <StackSurviveStories />
     </View>
   );
 };
