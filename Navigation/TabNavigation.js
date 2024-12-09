@@ -1,4 +1,7 @@
+import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {StyleSheet, View, Platform} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import {
   TabArticleScreen,
   TabMainScreen,
@@ -10,13 +13,101 @@ const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   return (
-    <Tab.Navigator screenOptions={{headerShown: false}}>
-      <Tab.Screen name="TabQuizScreen" component={TabQuizScreen} />
-      <Tab.Screen name="TabMainScreen" component={TabMainScreen} />
-      <Tab.Screen name="TabTigerMapScreen" component={TabTigerMapScreen} />
-      <Tab.Screen name="TabArticleScreen" component={TabArticleScreen} />
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: true,
+        tabBarStyle: styles.tabBar,
+        tabBarActiveTintColor: '#FF4444',
+        tabBarInactiveTintColor: '#FFFFFF',
+        tabBarLabelStyle: styles.tabLabel,
+      }}>
+      <Tab.Screen
+        name="TabQuizScreen"
+        component={TabQuizScreen}
+        options={{
+          tabBarLabel: 'Quiz',
+          tabBarIcon: ({color, size}) => (
+            <View style={styles.iconContainer}>
+              <Icon name="game-controller" size={size} color={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="TabMainScreen"
+        component={TabMainScreen}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({color, size}) => (
+            <View style={styles.iconContainer}>
+              <Icon name="home" size={size} color={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="TabTigerMapScreen"
+        component={TabTigerMapScreen}
+        options={{
+          tabBarLabel: 'Map',
+          tabBarIcon: ({color, size}) => (
+            <View style={styles.iconContainer}>
+              <Icon name="map" size={size} color={color} />
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="TabArticleScreen"
+        component={TabArticleScreen}
+        options={{
+          tabBarLabel: 'Articles',
+          tabBarIcon: ({color, size}) => (
+            <View style={styles.iconContainer}>
+              <Icon name="newspaper-sharp" size={size} color={color} />
+            </View>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 };
+
+const styles = StyleSheet.create({
+  tabBar: {
+    position: 'absolute',
+    bottom: 25,
+    left: 20,
+    right: 20,
+    elevation: 5,
+    backgroundColor: '#1A1A1A',
+    borderRadius: 15,
+    height: 70,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    paddingBottom: 5,
+    paddingTop: 5,
+    borderTopWidth: 0,
+    borderColor: 'red',
+    marginHorizontal: 10,
+    
+  },
+  iconContainer: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  tabLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+  },
+});
 
 export default TabNavigation;

@@ -53,6 +53,7 @@ const TabQuizScreen = ({navigation}) => {
           <View style={[styles.cardOverlay, styles.deathOverlay]}>
             <Text style={styles.cardTitle}>Survival Mode</Text>
             <Text style={styles.heartText}>❤️</Text>
+           
             <Text style={styles.cardDescription}>
               One life, one chance! How far can you go without making a mistake?
             </Text>
