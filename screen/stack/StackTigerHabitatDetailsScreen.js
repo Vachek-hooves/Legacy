@@ -8,22 +8,14 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { TigerEncyclopedia } from '../../data/enciclopedia';
+import {TigerEncyclopedia} from '../../data/enciclopedia';
 
-const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
-  const { scientificName } = route.params;
-  
-  // Find tiger data from encyclopedia
-  
+const StackTigerHabitatDetailsScreen = ({route, navigation}) => {
+  const {scientificName} = route.params;
+
   const tigerData = Object.values(TigerEncyclopedia).find(
-    
-    tiger => tiger.scientificName === scientificName
+    tiger => tiger.scientificName === scientificName,
   );
-  
-  // const tigerRandomImage=tigerData.image[Math.floor(Math.random() * tigerData.image.length)]
-  // console.log('tigerRandomImage', tigerRandomImage);
-  // console.log('tigerData', tigerData.image.length);
-  
 
   if (!tigerData) {
     return (
@@ -36,10 +28,9 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        <TouchableOpacity 
+        <TouchableOpacity
           style={styles.backButton}
-          onPress={() => navigation.goBack()}
-        >
+          onPress={() => navigation.goBack()}>
           <Text style={styles.backButtonText}>← Back to Map</Text>
         </TouchableOpacity>
 
@@ -47,8 +38,8 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
         <Text style={styles.scientificName}>{tigerData.scientificName}</Text>
 
         {tigerData.image && (
-          <Image 
-            source={tigerData.image} 
+          <Image
+            source={tigerData.image}
             style={styles.tigerImage}
             resizeMode="cover"
           />
@@ -57,10 +48,16 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
         <View style={styles.infoSection}>
           <Text style={styles.sectionTitle}>Habitat</Text>
           <View style={styles.habitatInfo}>
-            <Text style={styles.infoText}>Regions: {tigerData.habitat.regions.join(', ')}</Text>
-            <Text style={styles.infoText}>Terrain: {tigerData.habitat.terrainTypes.join(', ')}</Text>
+            <Text style={styles.infoText}>
+              Regions: {tigerData.habitat.regions.join(', ')}
+            </Text>
+            <Text style={styles.infoText}>
+              Terrain: {tigerData.habitat.terrainTypes.join(', ')}
+            </Text>
             {tigerData.habitat.famousLocation && (
-              <Text style={styles.infoText}>Famous Location: {tigerData.habitat.famousLocation}</Text>
+              <Text style={styles.infoText}>
+                Famous Location: {tigerData.habitat.famousLocation}
+              </Text>
             )}
           </View>
         </View>
@@ -70,19 +67,24 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
           <View style={styles.characteristicsInfo}>
             {tigerData.physicalCharacteristics.weight?.male && (
               <Text style={styles.infoText}>
-                Weight: {tigerData.physicalCharacteristics.weight.male.min || ''} 
-                - {tigerData.physicalCharacteristics.weight.male.max} 
+                Weight:{' '}
+                {tigerData.physicalCharacteristics.weight.male.min || ''}-{' '}
+                {tigerData.physicalCharacteristics.weight.male.max}
                 {tigerData.physicalCharacteristics.weight.male.unit}
               </Text>
             )}
-            <Text style={styles.infoText}>Appearance: {tigerData.physicalCharacteristics.appearance}</Text>
+            <Text style={styles.infoText}>
+              Appearance: {tigerData.physicalCharacteristics.appearance}
+            </Text>
           </View>
         </View>
 
         <View style={styles.infoSection}>
           <Text style={styles.sectionTitle}>Behavioral Traits</Text>
           {tigerData.behavioralTraits.map((trait, index) => (
-            <Text key={index} style={styles.bulletPoint}>• {trait}</Text>
+            <Text key={index} style={styles.bulletPoint}>
+              • {trait}
+            </Text>
           ))}
         </View>
 
@@ -90,7 +92,9 @@ const StackTigerHabitatDetailsScreen = ({ route, navigation }) => {
           <Text style={styles.statusTitle}>Conservation Status</Text>
           <Text style={styles.statusText}>{tigerData.conservationStatus}</Text>
           {tigerData.populationStatus && (
-            <Text style={styles.populationText}>{tigerData.populationStatus}</Text>
+            <Text style={styles.populationText}>
+              {tigerData.populationStatus}
+            </Text>
           )}
         </View>
       </ScrollView>

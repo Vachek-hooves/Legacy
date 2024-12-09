@@ -9,8 +9,9 @@ import {
   ScrollView,
 } from 'react-native';
 import {useAppContext} from '../../store/context';
+import QuizLayout from '../../components/layout/QuizLayout';
 
-const GAME_DURATION = 60; // 90 seconds
+const GAME_DURATION = 30; 
 
 const StackTimeChallengeScreen = ({navigation}) => {
   const {getRandomQuestion, updateHighScore, saveQuizResult} = useAppContext();
@@ -36,10 +37,10 @@ const StackTimeChallengeScreen = ({navigation}) => {
       setTimeLeft(GAME_DURATION);
       setIsGameOver(false);
     };
-    
+
     initGame();
     startTimer();
-    
+
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -49,7 +50,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
 
   const startTimer = () => {
     timerRef.current = setInterval(() => {
-      setTimeLeft((prev) => {
+      setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timerRef.current);
           handleGameOver();
@@ -63,27 +64,27 @@ const StackTimeChallengeScreen = ({navigation}) => {
   const handleGameOver = async () => {
     if (isGameOver) return;
     setIsGameOver(true);
-    
+
     try {
       const finalScore = scoreRef.current;
       console.log('Final Score:', finalScore);
-      
+
       await saveQuizResult('timeChallenge', finalScore, GAME_DURATION);
       await updateHighScore('timeChallenge', finalScore);
-      
+
       navigation.replace('StackQuizResults', {
         mode: 'timeChallenge',
         score: finalScore,
-        message: 'Time\'s up! Your score:',
+        message: "Time's up! Your score:",
       });
     } catch (error) {
       console.error('Error in handleGameOver:', error);
     }
   };
 
-  const handleAnswer = async (selectedAnswer) => {
+  const handleAnswer = async selectedAnswer => {
     if (isGameOver) return;
-    
+
     if (selectedAnswer === currentQuestion.answer) {
       setScore(prevScore => {
         const newScore = prevScore + 1;
@@ -96,7 +97,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
 
   const getNextQuestion = () => {
     const question = getRandomQuestion(usedQuestionIds);
-    
+
     if (!question) {
       const newQuestion = getRandomQuestion([]);
       setUsedQuestionIds([newQuestion.id]);
@@ -105,7 +106,7 @@ const StackTimeChallengeScreen = ({navigation}) => {
       setCurrentQuestion(question);
       setUsedQuestionIds(prev => [...prev, question.id]);
     }
-    
+
     Animated.sequence([
       Animated.timing(fadeAnim, {
         toValue: 0,
@@ -123,28 +124,30 @@ const StackTimeChallengeScreen = ({navigation}) => {
   if (!currentQuestion) return null;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.timer}>Time: {timeLeft}s</Text>
-        <Text style={styles.score}>Score: {score}</Text>
-      </View>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Animated.View style={[styles.questionContainer, {opacity: fadeAnim}]}>
-          <Text style={styles.question}>{currentQuestion.question}</Text>
-          <View style={styles.optionsContainer}>
-            {currentQuestion.options.map((option, index) => (
-              <TouchableOpacity
-                key={index}
-                style={styles.optionButton}
-                onPress={() => handleAnswer(option)}
-              >
-                <Text style={styles.optionText}>{option}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        </Animated.View>
-      </ScrollView>
-    </SafeAreaView>
+    <QuizLayout>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.timer}>Time: {timeLeft}s</Text>
+          <Text style={styles.score}>Score: {score}</Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Animated.View
+            style={[styles.questionContainer, {opacity: fadeAnim}]}>
+            <Text style={styles.question}>{currentQuestion.question}</Text>
+            <View style={styles.optionsContainer}>
+              {currentQuestion.options.map((option, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.optionButton}
+                  onPress={() => handleAnswer(option)}>
+                  <Text style={styles.optionText}>{option}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </Animated.View>
+        </ScrollView>
+      </SafeAreaView>
+    </QuizLayout>
   );
 };
 
@@ -156,7 +159,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    // backgroundColor: '#1A1A1A',
     padding: 20,
   },
   header: {
@@ -169,24 +172,28 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     padding: 10,
     borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
   },
   timer: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FF4444',
-  
   },
   score: {
     fontSize: 24,
     fontWeight: 'bold',
     color: '#FF8C00',
-  
   },
   questionContainer: {
     flex: 1,
     justifyContent: 'center',
     marginHorizontal: 20,
+    marginTop: 50,
+    borderWidth: 1,
+    borderColor: 'red',
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   question: {
     fontSize: 24,
@@ -194,12 +201,13 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 40,
+    color:'black'
   },
   optionsContainer: {
     gap: 15,
   },
   optionButton: {
-    backgroundColor: 'rgba(255, 140, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     padding: 20,
     borderRadius: 15,
     borderWidth: 1,

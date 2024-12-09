@@ -9,6 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import {useAppContext} from '../../store/context';
+import QuizLayout from '../../components/layout/QuizLayout';
 
 const StackFirstDeath = ({navigation}) => {
   const {getRandomQuestion, updateHighScore, saveQuizResult} = useAppContext();
@@ -25,7 +26,7 @@ const StackFirstDeath = ({navigation}) => {
     const question = getRandomQuestion(usedQuestionIds);
     setCurrentQuestion(question);
     setUsedQuestionIds([...usedQuestionIds, question.id]);
-    
+
     // Animate question transition
     Animated.sequence([
       Animated.timing(fadeAnim, {
@@ -41,7 +42,7 @@ const StackFirstDeath = ({navigation}) => {
     ]).start();
   };
 
-  const handleAnswer = async (selectedAnswer) => {
+  const handleAnswer = async selectedAnswer => {
     if (selectedAnswer === currentQuestion.answer) {
       const newScore = score + 1;
       setScore(newScore);
@@ -60,30 +61,31 @@ const StackFirstDeath = ({navigation}) => {
   if (!currentQuestion) return null;
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.score}>Score: {score}</Text>
-      </View>
-
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-
-      <Animated.View style={[styles.questionContainer, {opacity: fadeAnim}]}>
-        <Text style={styles.question}>{currentQuestion.question}</Text>
-
-        <View style={styles.optionsContainer}>
-          {currentQuestion.options.map((option, index) => (
-            <TouchableOpacity
-            key={index}
-            style={styles.optionButton}
-            onPress={() => handleAnswer(option)}
-            >
-              <Text style={styles.optionText}>{option}</Text>
-            </TouchableOpacity>
-          ))}
+    <QuizLayout>
+      <SafeAreaView style={styles.container}>
+        <View style={styles.header}>
+          <Text style={styles.score}>Score: {score}</Text>
         </View>
-      </Animated.View>
-          </ScrollView>
-    </SafeAreaView>
+
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <Animated.View
+            style={[styles.questionContainer, {opacity: fadeAnim}]}>
+            <Text style={styles.question}>{currentQuestion.question}</Text>
+
+            <View style={styles.optionsContainer}>
+              {currentQuestion.options.map((option, index) => (
+                <TouchableOpacity
+                  key={index}
+                  style={styles.optionButton}
+                  onPress={() => handleAnswer(option)}>
+                  <Text style={styles.optionText}>{option}</Text>
+                </TouchableOpacity>
+              ))}
+            </View>
+          </Animated.View>
+        </ScrollView>
+      </SafeAreaView>
+    </QuizLayout>
   );
 };
 
@@ -95,7 +97,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    // backgroundColor: '#1A1A1A',
     padding: 20,
   },
   header: {
@@ -107,7 +109,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     padding: 10,
     borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -125,7 +127,7 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     padding: 10,
     borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    backgroundColor: 'rgba(255, 255, 255, 0.4)',
   },
   question: {
     fontSize: 24,
@@ -133,12 +135,13 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
     marginBottom: 40,
+    color:'black'
   },
   optionsContainer: {
     gap: 15,
   },
   optionButton: {
-    backgroundColor: 'rgba(255, 140, 0, 0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     padding: 20,
     borderRadius: 15,
     borderWidth: 1,

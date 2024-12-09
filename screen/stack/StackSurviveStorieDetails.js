@@ -1,15 +1,23 @@
 import React from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
-import { useRoute, useNavigation } from '@react-navigation/native';
-import { TigerSurvive } from '../../data/survive';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native';
+import {useRoute, useNavigation} from '@react-navigation/native';
+import {TigerSurvive} from '../../data/survive';
+import TabSurvivalLayout from '../../components/layout/TabSurvivalLayout';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const StackSurviveStorieDetails = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const { storyId } = route.params;
+  const {storyId} = route.params;
 
-  const story = TigerSurvive.find(s=>s.id===storyId);
-
+  const story = TigerSurvive.find(s => s.id === storyId);
 
   if (!story) {
     return (
@@ -20,51 +28,59 @@ const StackSurviveStorieDetails = () => {
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      <TouchableOpacity 
-        style={styles.backButton}
-        onPress={() => navigation.goBack()}
-      >
-        <Text style={styles.backButtonText}>← Back</Text>
-      </TouchableOpacity>
+    <TabSurvivalLayout>
+      <SafeAreaView style={styles.container}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}>
+            <Icon name="arrow-back" size={32} color="#FF4444" />
+          <Text style={styles.backButtonText}>
+             Back
+          </Text>
+        </TouchableOpacity>
 
-      <ScrollView style={styles.scrollView}>
-        <Text style={styles.title}>{story.title}</Text>
-        <Text style={styles.focus}>Focus: {story.focus}</Text>
-        <Text style={styles.location}>Location: {story.location}</Text>
+        <ScrollView style={styles.scrollView}>
+          <Text style={styles.title}>{story.title}</Text>
+          <Text style={styles.focus}>Focus: {story.focus}</Text>
+          <Text style={styles.location}>Location: {story.location}</Text>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Challenges</Text>
-          {story.challenges.map((challenge, index) => (
-            <Text key={index} style={styles.listItem}>- {challenge}</Text>
-          ))}
-        </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Challenges</Text>
+            {story.challenges.map((challenge, index) => (
+              <Text key={index} style={styles.listItem}>
+                - {challenge}
+              </Text>
+            ))}
+          </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Conservation Efforts</Text>
-          {story.conservationEfforts.map((effort, index) => (
-            <Text key={index} style={styles.listItem}>- {effort}</Text>
-          ))}
-        </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Conservation Efforts</Text>
+            {story.conservationEfforts.map((effort, index) => (
+              <Text key={index} style={styles.listItem}>
+                - {effort}
+              </Text>
+            ))}
+          </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Outcomes</Text>
-          <Text style={styles.outcomes}>{story.outcomes}</Text>
-        </View>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Outcomes</Text>
+            <Text style={styles.outcomes}>{story.outcomes}</Text>
+          </View>
 
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Story</Text>
-          <Text style={styles.content}>{story.content}</Text>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Story</Text>
+            <Text style={styles.content}>{story.content}</Text>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </TabSurvivalLayout>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A1A1A',
+    backgroundColor: '#1A1A1A'+90,
     padding: 20,
   },
   scrollView: {
@@ -107,7 +123,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   content: {
-    fontSize: 16,
+    fontSize: 18,
     color: 'white',
     lineHeight: 24,
   },
@@ -121,10 +137,13 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginBottom: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
   },
   backButtonText: {
     color: '#FF4444',
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: '600',
   },
 });

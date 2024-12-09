@@ -1,9 +1,9 @@
 import {StyleSheet, ImageBackground} from 'react-native';
 
-const TabLayout = ({children, blur}) => {
+const QuizLayout = ({children, blur}) => {
   return (
     <ImageBackground
-      source={require('../../assets/bg/tigerEye.png')}
+      source={require('../../assets/bg/TigerQuizLife.png')}
       resizeMode="cover"
       blurRadius={blur}
       style={styles.background}>
@@ -12,11 +12,11 @@ const TabLayout = ({children, blur}) => {
   );
 };
 
-export default TabLayout;
+export default QuizLayout;
 
 const styles = StyleSheet.create({
   background: {
     flex: 1,
-    alignItems: 'center',
+    // alignItems: 'center',
   },
 });
