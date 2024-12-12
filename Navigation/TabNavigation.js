@@ -102,7 +102,7 @@ const TabNavigation = () => {
           tabBarLabel: 'Achieves',
           tabBarIcon: ({color, size}) => (
             <View style={styles.iconContainer}>
-              <FontAwesome name="award" size={size} color={color} />
+              <FontAwesome name="award" size={32} color={color} />
             </View>
           ),
         }}
@@ -175,6 +175,7 @@ const styles = StyleSheet.create({
       },
     }),
     marginHorizontal: 10,
+    paddingTop:8
   },
   iconContainer: {
     width: 50,

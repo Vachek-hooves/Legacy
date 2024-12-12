@@ -1,5 +1,13 @@
 import React, {useEffect, useRef} from 'react';
-import {StyleSheet, Text, View, Dimensions, Animated} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Animated,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
 import LottieView from 'lottie-react-native';
 
 const {width, height} = Dimensions.get('window');
@@ -32,29 +40,30 @@ const StackWelcomeScreen = ({navigation}) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Animated.View
-        style={[
-          styles.textContainer,
-          {
-            opacity: fadeAnim,
-            transform: [
-              {translateY: slideAnim},
-              {scale: scaleAnim},
-            ],
-          },
-        ]}>
-        <Text style={styles.welcomeText}>Welcome to</Text>
-        <Text style={styles.legacyText}>Tiger Legacy</Text>
-      </Animated.View>
+    <ImageBackground
+      source={require('../../assets/bg/bg.png')}
+      style={{flex: 1}}>
+      <View style={styles.container}>
+        <Animated.View
+          style={[
+            styles.textContainer,
+            {
+              opacity: fadeAnim,
+              transform: [{translateY: slideAnim}, {scale: scaleAnim}],
+            },
+          ]}>
+          <Text style={styles.welcomeText}>Welcome to</Text>
+          <Text style={styles.legacyText}>Tiger Legacy</Text>
+        </Animated.View>
 
-      <LottieView
-        source={require('../../assets/animation/TigerJungle.json')}
-        autoPlay
-        loop
-        style={styles.lottie}
-      />
-    </View>
+        <LottieView
+          source={require('../../assets/animation/TigerJungle.json')}
+          autoPlay
+          loop
+          style={styles.lottie}
+        />
+      </View>
+    </ImageBackground>
   );
 };
 
@@ -63,7 +72,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#1A1A1A',
+    // backgroundColor: '#1A1A1A',
     borderRadius: 10,
   },
   textContainer: {
